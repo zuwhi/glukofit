@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
+import 'package:glukofit/controllers/auth_controller.dart';
 
-class DashboardView extends StatelessWidget {
+class DashboardView extends GetView<AuthController> {
   const DashboardView({super.key});
 
   @override
@@ -23,7 +24,22 @@ class DashboardView extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed(AppRoutes.scanner);
                   },
-                  child: const Text("Go to scanner view"))
+                  child: const Text("Go to scanner view")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.login);
+                  },
+                  child: const Text("Go to login")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.register);
+                  },
+                  child: const Text("Go to register")),
+              ElevatedButton(
+                  onPressed: () {
+                    controller.logout();
+                  },
+                  child: const Text("logout")),
             ],
           ),
         ),
