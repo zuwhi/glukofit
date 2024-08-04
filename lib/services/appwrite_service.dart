@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ class AppwriteService extends GetxService {
   Client client = Client();
   late Account account;
   late Databases databases;
+  late Storage storage;
 
   Future<AppwriteService> init() async {
     client
@@ -16,6 +19,7 @@ class AppwriteService extends GetxService {
         .setSelfSigned(status: true);
     account = Account(client);
     databases = Databases(client);
+    storage = Storage(client);
     return this;
   }
 
@@ -29,6 +33,35 @@ class AppwriteService extends GetxService {
       );
       return result;
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> getUserDocument(String userId) async {
+    try {
+      final document = await databases.getDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.userCollectionId,
+        documentId: userId,
+      );
+      return document.data;
+    } catch (e) {
+      print('Error getting user document: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> updateUserDocument(
+      String userId, Map<String, dynamic> data) async {
+    try {
+      await databases.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.userCollectionId,
+        documentId: userId,
+        data: data,
+      );
+    } catch (e) {
+      print('Error updating user document: $e');
       rethrow;
     }
   }
@@ -83,5 +116,26 @@ class AppwriteService extends GetxService {
       print('Logout error: $e');
       rethrow;
     }
+  }
+
+  Future<Uint8List?> getArtikelImage(String imageId) async {
+    try {
+      final res = await storage.getFileView(
+        bucketId: AppwriteConstants.artikelBucketId,
+        fileId: imageId,
+      );
+      return res;
+    } catch (e) {
+      print('Error getting image: $e');
+      return null;
+    }
+  }
+
+  Future<List<Document>> getAllArtikel() async {
+    final documents = await databases.listDocuments(
+      databaseId: AppwriteConstants.databaseId,
+      collectionId: AppwriteConstants.artikelCollectionId,
+    );
+    return documents.documents;
   }
 }

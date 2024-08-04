@@ -8,6 +8,7 @@ class AuthController extends GetxController {
   final isLoggedIn = false.obs;
   final isLoading = false.obs;
   final errorMessage = ''.obs;
+  final userData = Rx<Map<String, dynamic>>({});
 
   @override
   void onInit() {
@@ -17,10 +18,20 @@ class AuthController extends GetxController {
 
   Future<void> checkLoginStatus() async {
     try {
-      await _appwriteService.account.get();
+      final account = await _appwriteService.account.get();
       isLoggedIn.value = true;
+      await getUserData(account.$id);
     } catch (e) {
       isLoggedIn.value = false;
+    }
+  }
+
+  Future<void> getUserData(String userId) async {
+    try {
+      final data = await _appwriteService.getUserDocument(userId);
+      userData.value = data;
+    } catch (e) {
+      print('Error getting user data: $e');
     }
   }
 
@@ -68,8 +79,10 @@ class AuthController extends GetxController {
     errorMessage.value = '';
 
     try {
-      await _appwriteService.createSession(email: email, password: password);
+      final session = await _appwriteService.createSession(
+          email: email, password: password);
       isLoggedIn.value = true;
+      await getUserData(session.userId);
       Get.snackbar('Success', 'Logged in successfully');
       Get.offAllNamed(AppRoutes.dashboard);
     } catch (e) {
@@ -84,11 +97,49 @@ class AuthController extends GetxController {
     try {
       await _appwriteService.logout();
       isLoggedIn.value = false;
-      Get.offAllNamed('/login');
+      userData.value = {};
+      Get.offAllNamed('/dashboard');
     } catch (e) {
       Get.snackbar('Error', 'Failed to logout: $e');
     }
   }
+
+  /*
+  Future<void> updateUser({
+    required String nama,
+    required String status,
+    required int umur,
+    required int tinggi,
+    required int berat,
+  }) async {
+    isLoading.value = true;
+    errorMessage.value = '';
+
+    try {
+      final currentUser = await _appwriteService.account.get();
+      final updatedData = Map<String, dynamic>.from(userData.value);
+      
+      updatedData['nama'] = nama;
+      updatedData['status'] = status;
+      updatedData['umur'] = umur;
+      updatedData['tinggi'] = tinggi;
+      updatedData['berat'] = berat;
+
+      await _appwriteService.updateUserDocument(
+        currentUser.$id,
+        updatedData,
+      );
+
+      userData.value = updatedData;
+      Get.snackbar('Success', 'User data updated successfully');
+    } catch (e) {
+      errorMessage.value = e.toString();
+      Get.snackbar('Error', 'Failed to update user data');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  */
 }
 
 class LogoutBinding extends Bindings {

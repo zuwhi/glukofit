@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
+import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/services/appwrite_service.dart';
+import 'package:glukofit/views/artikel/artikel_list_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
@@ -36,6 +38,13 @@ void main() async {
         name: AppRoutes.login,
         page: () => LoginView(),
         binding: AuthBinding(),
+      ),
+      GetPage(
+        name: AppRoutes.artikel,
+        page: () => const ArtikelListView(),
+        binding: BindingsBuilder(() {
+          Get.put(ArtikelController());
+        }),
       ),
     ],
     initialRoute: AppRoutes.dashboard,

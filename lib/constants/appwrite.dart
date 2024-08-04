@@ -3,4 +3,6 @@ class AppwriteConstants {
   static const String projectId = '66ac9f130003a10d2763';
   static const String databaseId = 'glukofitDB';
   static const String userCollectionId = 'userCollection';
+  static const String artikelCollectionId = 'artikelCollection';
+  static const String artikelBucketId = '66aedb5300067ab059c0';
 }
