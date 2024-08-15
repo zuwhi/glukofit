@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:glukofit/controllers/produk_controller.dart';
 
 class DashboardView extends GetView<AuthController> {
   const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<ProdukController>(() => ProdukController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dashboard"),
@@ -44,6 +46,11 @@ class DashboardView extends GetView<AuthController> {
                     Get.toNamed(AppRoutes.artikel);
                   },
                   child: const Text("artikel")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.diagnosa);
+                  },
+                  child: const Text("diagnosa")),
               const SizedBox(height: 20),
               const Text(
                 "User Data:",

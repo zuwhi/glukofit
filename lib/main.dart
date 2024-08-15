@@ -6,8 +6,11 @@ import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/services/appwrite_service.dart';
 import 'package:glukofit/views/artikel/artikel_list_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
+import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
+import 'package:glukofit/views/diagnosa/result_diagnosa_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
+import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
 
@@ -28,6 +31,18 @@ void main() async {
       GetPage(
         name: AppRoutes.scanner,
         page: () => const ScannerView(),
+      ),
+      GetPage(
+        name: AppRoutes.detailProduk,
+        page: () => const ProdukView(),
+      ),
+      GetPage(
+        name: AppRoutes.diagnosa,
+        page: () => const DiagnosaView(),
+      ),
+      GetPage(
+        name: AppRoutes.resultDiagnosa,
+        page: () => const ResultDiagnosaView(),
       ),
       GetPage(
         name: AppRoutes.register,

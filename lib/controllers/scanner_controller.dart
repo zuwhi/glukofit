@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/models/scan_model.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 
 class ScanController extends GetxController {
   @override
@@ -22,7 +22,8 @@ class ScanController extends GetxController {
   }
 
 
-  RxString label = "".obs;
+  final resultScan =
+      Rx<ScanModel>(ScanModel(confidence: 0, index: 0, label: ""));
   late CameraController cameraController;
   late List<CameraDescription> cameras;
 
@@ -65,15 +66,13 @@ class ScanController extends GetxController {
 
   initTFlite() async {
     try {
-                await Tflite.loadModel(
+      await Tflite.loadModel(
         model: "assets/tensorflow/model.tflite",
         labels: "assets/tensorflow/labels.txt",
         isAsset: true,
         numThreads: 1,
         useGpuDelegate: false,
       );
- 
-      
     } catch (e) {
       print('cek error $e');
     }
@@ -112,9 +111,12 @@ class ScanController extends GetxController {
       // Cek hasil deteksi
       if (detector != null && detector.isNotEmpty) {
         var detectedObject = detector.first;
-        print('Detected Object: $detectedObject');
-
-        label.value = detectedObject['label'];
+        ScanModel scanModel = ScanModel(
+          confidence: detectedObject['confidence'],
+          index: detectedObject['index'],
+          label: detectedObject['label'],
+        );
+        resultScan(scanModel);
 
         presentage = detectedObject['confidence'];
         Logger().d(presentage);

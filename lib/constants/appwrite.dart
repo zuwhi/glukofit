@@ -4,5 +4,6 @@ class AppwriteConstants {
   static const String databaseId = 'glukofitDB';
   static const String userCollectionId = 'userCollection';
   static const String artikelCollectionId = 'artikelCollection';
+  static const String produkCollectionId = 'produkCollection';
   static const String artikelBucketId = '66aedb5300067ab059c0';
 }
