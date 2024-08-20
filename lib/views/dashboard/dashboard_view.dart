@@ -23,11 +23,6 @@ class DashboardView extends GetView<AuthController> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.scanner);
-                  },
-                  child: const Text("Go to scanner view")),
-              ElevatedButton(
-                  onPressed: () {
                     Get.toNamed(AppRoutes.login);
                   },
                   child: const Text("Go to login")),
@@ -51,6 +46,16 @@ class DashboardView extends GetView<AuthController> {
                     Get.toNamed(AppRoutes.diagnosa);
                   },
                   child: const Text("diagnosa")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.scanner);
+                  },
+                  child: const Text("Go to scanner view")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.searchNutrisi);
+                  },
+                  child: const Text("search nutrisi")),
               const SizedBox(height: 20),
               const Text(
                 "User Data:",

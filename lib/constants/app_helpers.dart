@@ -2,11 +2,11 @@ class AppHelpers {
   static String mapIndexToQuestion(int index) {
     switch (index) {
       case 0:
-        return '0. Berapa umur Anda?'; // Pertanyaan untuk umur
+        return '0. Berapa umur Anda?'; 
       case 1:
-        return '1. Apa gender Anda?'; // Pertanyaan untuk gender
+        return '1. Apa gender Anda?'; 
       case 2:
-        return '4. Apakah Anda mengalami sering kencing?'; // Nomor mulai dari 4
+        return '4. Apakah Anda sering kencing?'; 
       case 3:
         return '5. Apakah Anda sering mengalami haus?';
       case 4:
@@ -24,7 +24,7 @@ class AppHelpers {
       case 10:
         return '12. Apakah Anda merasa mudah marah?';
       case 11:
-        return '13. Apakah Anda mengalami penyembuhan yang tertunda?';
+        return '13. Apakah Anda luka anda tidak cepat sembuh?';
       case 12:
         return '14. Apakah Anda mengalami paresis parsial?';
       case 13:

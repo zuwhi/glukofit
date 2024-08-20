@@ -10,6 +10,9 @@ import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
 import 'package:glukofit/views/diagnosa/result_diagnosa_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
+import 'package:glukofit/views/nutrisi/search_nutrisi.dart';
+import 'package:glukofit/views/produk/nutrisi_produk_view.dart';
+import 'package:glukofit/views/produk/produk_from_image_view.dart';
 import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
@@ -37,12 +40,24 @@ void main() async {
         page: () => const ProdukView(),
       ),
       GetPage(
+        name: AppRoutes.nutrisiProduk,
+        page: () => const NutrisiProdukView(),
+      ),
+      GetPage(
         name: AppRoutes.diagnosa,
         page: () => const DiagnosaView(),
       ),
       GetPage(
         name: AppRoutes.resultDiagnosa,
         page: () => const ResultDiagnosaView(),
+      ),
+      GetPage(
+        name: AppRoutes.searchNutrisi,
+        page: () => const SearchNutrisiView(),
+      ),
+      GetPage(
+        name: AppRoutes.produkFromImage,
+        page: () => const ProdukFromImageView(),
       ),
       GetPage(
         name: AppRoutes.register,

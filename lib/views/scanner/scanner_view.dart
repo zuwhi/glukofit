@@ -12,7 +12,6 @@ import 'package:glukofit/controllers/scanner_controller.dart';
 import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:logger/logger.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ScannerView extends StatelessWidget {
   const ScannerView({super.key});
@@ -24,13 +23,15 @@ class ScannerView extends StatelessWidget {
     scanController.initAll();
 
     return Scaffold(
-      backgroundColor: Colors.yellow,
+      backgroundColor: Colors.white,
       body: Obx(() {
         if (produkController.listProduk.isEmpty &&
             !produkController.isLoaded.value) {
           produkController.getListProduk();
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: AppColors.primary,
+            ),
           );
         }
         {
@@ -44,9 +45,12 @@ class ScannerView extends StatelessWidget {
                   child: GetBuilder<ScanController>(
                     init: ScanController(),
                     builder: (controller) {
-                      return controller.isCamerainitialized.value
-                          ? CameraPreview(controller.cameraController)
-                          : const Text("loaading....");
+                      if (controller.isCamerainitialized.value &&
+                          controller.cameraController.value.isInitialized) {
+                        return CameraPreview(controller.cameraController);
+                      } else {
+                        return const Text("Loading...");
+                      }
                     },
                   ),
                 ),
@@ -84,12 +88,9 @@ class ScannerView extends StatelessWidget {
                               fontSize: 20.0,
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.pause,
-                                color: Colors.white,
-                              )),
+                          const SizedBox(
+                            width: 30.0,
+                          ),
                         ],
                       ),
                     )),
@@ -102,47 +103,55 @@ class ScannerView extends StatelessWidget {
                       Container(
                         color: Colors.black38,
                         width: double.infinity,
-                        height: 100,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        height: 105,
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                                child: SfLinearGauge(
-                              minorTicksPerInterval: 4,
-                              useRangeColorForAxis: true,
-                              animateAxis: true,
-                              minimum: 0,
-                              maximum: 15,
-                              axisTrackStyle:
-                                  const LinearAxisTrackStyle(thickness: 1),
-                              markerPointers: const [
-                                LinearShapePointer(
-                                  value: 8,
-                                  height: 30,
-                                  width: 30,
-                                  color: AppColors.primary,
-                                )
-                              ],
-                              ranges: const <LinearGaugeRange>[
-                                LinearGaugeRange(
-                                  startValue: 0,
-                                  endValue: 5,
-                                  position: LinearElementPosition.outside,
-                                  color: Colors.green,
+                            // SizedBox(
+                            //   width: 35,
+                            //   child: IconButton(
+                            //       onPressed: () {},
+                            //       icon: const Icon(
+                            //         Icons.photo,
+                            //         size: 35,
+                            //         color: Colors.white,
+                            //       )),
+                            // ),
+                            InkWell(
+                              onTap: () {
+                                scanController.captureImage();
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                        width: 2, color: Colors.white)),
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white, // border color
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Container(),
+                                    ),
+                                  ),
                                 ),
-                                LinearGaugeRange(
-                                    startValue: 5,
-                                    endValue: 10,
-                                    position: LinearElementPosition.outside,
-                                    color: Colors.yellow),
-                                LinearGaugeRange(
-                                    startValue: 10,
-                                    endValue: 15,
-                                    position: LinearElementPosition.outside,
-                                    color: Colors.red),
-                              ],
-                            ))
+                              ),
+                            ),
+                            // const SizedBox(
+                            //   width: 35,
+                            // )
                           ],
                         ),
                       ),
@@ -188,11 +197,11 @@ class CardProduk extends StatelessWidget {
     Logger().d("produkController.listProduk ${produkController.listProduk}");
     if (namaProduk != "") {
       List<ProdukModel> produkList = produkController.listProduk
-          .where((produk) =>
-              produk.nama_produk.toLowerCase() == namaProduk.toLowerCase())
+          .where((produk) => produk.nama_produk
+              .toLowerCase()
+              .contains(namaProduk.toLowerCase()))
           .toList();
 
-      // Periksa apakah produkList tidak kosong
       if (produkList.isNotEmpty) {
         Logger().d(produkList[0]);
         ProdukModel produk = produkList[0];
