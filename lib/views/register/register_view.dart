@@ -1,17 +1,20 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RegisterView extends GetView<AuthController> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
-  final TextEditingController heightController = TextEditingController();
-  final TextEditingController weightController = TextEditingController();
+  // final TextEditingController ageController = TextEditingController();
+  // final TextEditingController heightController = TextEditingController();
+  // final TextEditingController weightController = TextEditingController();
 
-  final RxString selectedStatus = 'Non Diabetes'.obs;
-  final List<String> statusOptions = ['Diabetes', 'Non Diabetes'];
+  // final RxString selectedStatus = 'Non Diabetes'.obs;
+  // final List<String> statusOptions = ['Diabetes', 'Non Diabetes'];
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -19,147 +22,161 @@ class RegisterView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    void register() {
+      if (_formKey.currentState!.validate()) {
+        controller.register(
+            emailController.text, passwordController.text, nameController.text);
+      }
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Register')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!GetUtils.isEmail(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    if (value.length < 8) {
-                      return 'Password must be at least 8 characters long';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                Obx(() => DropdownButtonFormField<String>(
-                      value: selectedStatus.value,
-                      items: statusOptions.map((String status) {
-                        return DropdownMenuItem<String>(
-                          value: status,
-                          child: Text(status),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        selectedStatus.value = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'Status'),
-                    )),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: ageController,
-                  decoration: const InputDecoration(labelText: 'Age'),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your age';
-                    }
-                    if (!GetUtils.isNum(value)) {
-                      return 'Please enter a valid age';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: heightController,
-                  decoration: const InputDecoration(labelText: 'Height (cm)'),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your height';
-                    }
-                    if (!GetUtils.isNum(value)) {
-                      return 'Please enter a valid height';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: weightController,
-                  decoration: const InputDecoration(labelText: 'Weight (kg)'),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your weight';
-                    }
-                    if (!GetUtils.isNum(value)) {
-                      return 'Please enter a valid weight';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                Obx(
-                  () => controller.isLoading.value
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              controller.register(
-                                emailController.text,
-                                passwordController.text,
-                                nameController.text,
-                                selectedStatus.value,
-                                int.parse(ageController.text),
-                                int.parse(heightController.text),
-                                int.parse(weightController.text),
-                              );
-                            }
-                          },
-                          child: const Text('Register'),
+        padding: const EdgeInsets.all(24.0),
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: 140,
+                      width: 170,
+                      child: Image.asset('assets/icons/logo.png')),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Create an account',
+                      style: GoogleFonts.dmSans(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 24.0, horizontal: 12.0),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Username tidak boleh kosong';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 24.0, horizontal: 12.0),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email tidak boleh kosong';
+                      }
+                      // if (!GetUtils.isEmail(value)) {
+                      //   return 'Please enter a valid email';
+                      // }
+                      final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+                      if (!emailRegex.hasMatch(value)) {
+                        return 'Format email tidak valid';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 24.0, horizontal: 12.0),
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password tidak boleh kosong';
+                      }
+                      if (value.length < 8) {
+                        return 'Password harus minimal 8 karakter';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: 60,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => register(),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff48ACA2),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)))),
+                      child: Obx(
+                        () => controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                'REGISTER',
+                                style: GoogleFonts.dmSans(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Obx(() => Text(
+                        controller.errorMessage.value,
+                        style: const TextStyle(color: Colors.red),
+                      )),
+                  const SizedBox(height: 4),
+                  RichText(
+                    text: TextSpan(
+                        text: 'Already have an account? ',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                          color: const Color(0xFF615D5E),
                         ),
-                ),
-                const SizedBox(height: 16),
-                Obx(() => Text(
-                      controller.errorMessage.value,
-                      style: const TextStyle(color: Colors.red),
-                    )),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () => Get.back(),
-                  child: const Text('Have an account? Login'),
-                ),
-              ],
+                        children: [
+                          TextSpan(
+                              text: 'Sign in',
+                              style: GoogleFonts.dmSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xffFF6601)),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(AppRoutes.register);
+                                })
+                        ]),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -167,3 +184,64 @@ class RegisterView extends GetView<AuthController> {
     );
   }
 }
+
+
+// const SizedBox(height: 16),
+//                   Obx(() => DropdownButtonFormField<String>(
+//                         value: selectedStatus.value,
+//                         items: statusOptions.map((String status) {
+//                           return DropdownMenuItem<String>(
+//                             value: status,
+//                             child: Text(status),
+//                           );
+//                         }).toList(),
+//                         onChanged: (String? newValue) {
+//                           selectedStatus.value = newValue!;
+//                         },
+//                         decoration: const InputDecoration(labelText: 'Status'),
+//                       )),
+//                   const SizedBox(height: 16),
+//                   TextFormField(
+//                     controller: ageController,
+//                     decoration: const InputDecoration(labelText: 'Age'),
+//                     keyboardType: TextInputType.number,
+//                     validator: (value) {
+//                       if (value == null || value.isEmpty) {
+//                         return 'Please enter your age';
+//                       }
+//                       if (!GetUtils.isNum(value)) {
+//                         return 'Please enter a valid age';
+//                       }
+//                       return null;
+//                     },
+//                   ),
+//                   const SizedBox(height: 16),
+//                   TextFormField(
+//                     controller: heightController,
+//                     decoration: const InputDecoration(labelText: 'Height (cm)'),
+//                     keyboardType: TextInputType.number,
+//                     validator: (value) {
+//                       if (value == null || value.isEmpty) {
+//                         return 'Please enter your height';
+//                       }
+//                       if (!GetUtils.isNum(value)) {
+//                         return 'Please enter a valid height';
+//                       }
+//                       return null;
+//                     },
+//                   ),
+//                   const SizedBox(height: 16),
+//                   TextFormField(
+//                     controller: weightController,
+//                     decoration: const InputDecoration(labelText: 'Weight (kg)'),
+//                     keyboardType: TextInputType.number,
+//                     validator: (value) {
+//                       if (value == null || value.isEmpty) {
+//                         return 'Please enter your weight';
+//                       }
+//                       if (!GetUtils.isNum(value)) {
+//                         return 'Please enter a valid weight';
+//                       }
+//                       return null;
+//                     },
+//                   ),

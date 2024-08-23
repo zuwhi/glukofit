@@ -19,7 +19,7 @@ class ArtikelCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 100,
+              height: 80,
               child: GetBuilder<ArtikelController>(
                 builder: (controller) {
                   return FutureBuilder<Uint8List?>(
@@ -29,10 +29,15 @@ class ArtikelCard extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       }
                       if (snapshot.hasData) {
-                        return Image.memory(
-                          snapshot.data!,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                        return ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+                          child: Image.memory(
+                            snapshot.data!,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         );
                       }
                       return Container(
@@ -44,31 +49,17 @@ class ArtikelCard extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
+            Container(
+              width: double.infinity,
+              alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    artikel.judul,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    artikel.kategori,
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    artikel.deskripsi,
-                    style: const TextStyle(fontSize: 12),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              decoration: const BoxDecoration(color: Colors.green),
+              child: Text(
+                artikel.judul,
+                style:
+                    const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

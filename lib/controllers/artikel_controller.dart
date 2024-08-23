@@ -45,6 +45,13 @@ class ArtikelController extends GetxController {
     return await artikelService.getArtikelImage(imageId);
   }
 
+  ArtikelModel? getLatestArtikel() {
+    if (artikels.isEmpty) {
+      return null;
+    }
+    return artikels.last;
+  }
+
   void setSelectedKategori(String kategori) {
     selectedKategori.value = kategori;
     _applyFilter();

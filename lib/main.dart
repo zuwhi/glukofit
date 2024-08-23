@@ -8,6 +8,8 @@ import 'package:glukofit/views/artikel/artikel_list_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
+import 'package:glukofit/views/login/welcome_view.dart';
+import 'package:glukofit/views/profile/profile_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
 
@@ -30,6 +32,10 @@ void main() async {
         page: () => const ScannerView(),
       ),
       GetPage(
+        name: AppRoutes.welcome,
+        page: () => const WelcomeView(),
+      ),
+      GetPage(
         name: AppRoutes.register,
         page: () => RegisterView(),
         binding: AuthBinding(),
@@ -45,6 +51,10 @@ void main() async {
         binding: BindingsBuilder(() {
           Get.put(ArtikelController());
         }),
+      ),
+      GetPage(
+        name: AppRoutes.profil,
+        page: () => ProfileView(),
       ),
     ],
     initialRoute: AppRoutes.dashboard,
