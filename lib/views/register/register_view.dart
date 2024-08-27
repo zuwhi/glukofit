@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -129,7 +130,7 @@ class RegisterView extends GetView<AuthController> {
                     child: ElevatedButton(
                       onPressed: () => register(),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff48ACA2),
+                          backgroundColor: AppColors.primary,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16)))),
@@ -168,7 +169,7 @@ class RegisterView extends GetView<AuthController> {
                               style: GoogleFonts.dmSans(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: const Color(0xffFF6601)),
+                                  color: AppColors.orange),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Get.toNamed(AppRoutes.register);

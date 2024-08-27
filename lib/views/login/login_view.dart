@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -99,7 +100,7 @@ class LoginView extends GetView<AuthController> {
                     child: ElevatedButton(
                       onPressed: () => login(),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff48ACA2),
+                          backgroundColor: AppColors.primary,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16)))),

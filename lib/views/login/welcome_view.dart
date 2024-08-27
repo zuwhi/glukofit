@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,7 +52,7 @@ class WelcomeView extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => Get.toNamed(AppRoutes.login),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff48ACA2),
+                        backgroundColor: AppColors.primary,
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16)))),
@@ -81,7 +82,7 @@ class WelcomeView extends StatelessWidget {
                             style: GoogleFonts.dmSans(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xffFF6601)),
+                                color: AppColors.orange),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Get.toNamed(AppRoutes.register);

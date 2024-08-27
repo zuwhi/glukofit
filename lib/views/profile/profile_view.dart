@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -89,7 +90,7 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         scrolledUnderElevation: 0.0,
         centerTitle: true,
-        backgroundColor: const Color(0xFF48ACA2),
+        backgroundColor: AppColors.primary,
         leading: IconButton(
           icon: Image.asset(
             'assets/icons/back.png',
@@ -115,7 +116,7 @@ class _ProfileViewState extends State<ProfileView> {
                     children: [
                       Container(
                         height: 140.0,
-                        color: const Color(0xFF48ACA2),
+                        color: AppColors.primary,
                       ),
                       Positioned(
                         bottom: 0,
@@ -238,7 +239,7 @@ class _ProfileViewState extends State<ProfileView> {
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
-                          backgroundColor: const Color(0xFFFF6601),
+                          backgroundColor: AppColors.orange,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),

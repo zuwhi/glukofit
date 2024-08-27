@@ -6,5 +6,11 @@ class AppRoutes {
   static const welcome = '/welcome';
   static const artikel = '/artikel';
   static const artikelDetail = '/artikelDetail';
+  static const detailProduk = '/detailProduk';
+  static const diagnosa = '/diagnosa';
+  static const resultDiagnosa = '/resultDiagnosa';
+  static const nutrisiProduk = '/nutrisiProduk';
+  static const searchNutrisi = '/searchNutrisi';
+  static const produkFromImage = '/produkFromImage';
   static const profil = '/profil';
 }

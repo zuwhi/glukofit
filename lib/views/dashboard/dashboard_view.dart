@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:glukofit/controllers/produk_controller.dart';
 
 class DashboardView extends GetView<AuthController> {
   const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<ProdukController>(() => ProdukController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dashboard"),
@@ -19,11 +21,6 @@ class DashboardView extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.scanner);
-                  },
-                  child: const Text("Go to scanner view")),
               ElevatedButton(
                   onPressed: () {
                     Get.toNamed(AppRoutes.welcome);
@@ -46,9 +43,19 @@ class DashboardView extends GetView<AuthController> {
                   child: const Text("artikel")),
               ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.profil);
+                    Get.toNamed(AppRoutes.diagnosa);
                   },
-                  child: const Text("profil")),
+                  child: const Text("diagnosa")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.scanner);
+                  },
+                  child: const Text("Go to scanner view")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.searchNutrisi);
+                  },
+                  child: const Text("search nutrisi")),
               const SizedBox(height: 20),
               const Text(
                 "User Data:",

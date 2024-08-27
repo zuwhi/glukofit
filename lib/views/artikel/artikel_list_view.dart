@@ -2,11 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 import 'package:glukofit/views/artikel/widgets/card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ArtikelListView extends GetView<ArtikelController> {
   const ArtikelListView({super.key});
@@ -28,7 +30,7 @@ class ArtikelListView extends GetView<ArtikelController> {
           ),
         ),
         scrolledUnderElevation: 0.0,
-        backgroundColor: Colors.blue,
+        backgroundColor: AppColors.primary,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -42,85 +44,91 @@ class ArtikelListView extends GetView<ArtikelController> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  TextField(
-                    // controller: controller.searchController,
-                    // onChanged: (value) => controller.filterArtikels(value),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: TextField(
+                    controller: controller.searchController,
+                    onChanged: (value) => controller.filterArtikels(value),
                     decoration: InputDecoration(
                       hintText: 'Find Article',
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Image.asset(
                           'assets/icons/search.png',
-                          height: 20,
-                          width: 20,
+                          height: 8,
+                          width: 8,
                         ),
                       ),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 12.0),
+                          vertical: 12.0, horizontal: 12.0),
                     ),
                   ),
-                  _buildCategoryFilter(),
-                  const SizedBox(height: 20),
-                  Text(
+                ),
+                _buildCategoryFilter(),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
                     'Top Article',
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  _buildTopArticle(),
-                  Text(
+                ),
+                const SizedBox(height: 10),
+                _buildTopArticle(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
                     'For You',
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            GetBuilder<ArtikelController>(
-              builder: (_) {
-                if (controller.isLoading.value) {
-                  return const SliverFillRemaining(
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                return SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final artikel = controller.filteredArtikels[index];
-                      return ArtikelCard(
-                        artikel: artikel,
-                        onTap: () => navigateToDetailPage(artikel),
-                      );
-                    },
-                    childCount: controller.filteredArtikels.length,
-                  ),
+          ),
+          GetBuilder<ArtikelController>(
+            builder: (_) {
+              if (controller.isLoading.value) {
+                return const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
                 );
-              },
-            ),
-          ],
-        ),
+              }
+              return SliverPadding(
+                padding: const EdgeInsets.only(
+                    top: 8, left: 24, right: 24, bottom: 16),
+                sliver: SliverMasonryGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  itemBuilder: (context, index) {
+                    final artikel = controller.filteredArtikels[index];
+                    return ArtikelCard(
+                      artikel: artikel,
+                      onTap: () => navigateToDetailPage(artikel),
+                      isLarge: index % 3 == 0,
+                    );
+                  },
+                  childCount: controller.filteredArtikels.length,
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -133,10 +141,12 @@ class ArtikelListView extends GetView<ArtikelController> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Row(
             children: [
+              const SizedBox(width: 20),
               _buildFilterChip('Semua', 'Semua'),
               _buildFilterChip('Seputar Diabetes', 'Seputar Diabetes'),
               _buildFilterChip('Nutrisi', 'Nutrisi'),
               _buildFilterChip('Resep Makanan', 'Resep Makanan'),
+              const SizedBox(width: 20),
             ],
           ),
         ),
@@ -159,8 +169,8 @@ class ArtikelListView extends GetView<ArtikelController> {
                 controller.setSelectedKategori(kategori);
               }
             },
-            backgroundColor: const Color(0xFF48ACA2),
-            selectedColor: const Color(0xFFFF6601),
+            backgroundColor: AppColors.primary,
+            selectedColor: AppColors.orange,
             labelStyle: GoogleFonts.dmSans(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -183,55 +193,73 @@ class ArtikelListView extends GetView<ArtikelController> {
 
         return GestureDetector(
           onTap: () => navigateToDetailPage(artikel),
-          child: SizedBox(
-            height: 200,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            height: 180,
             width: double.infinity,
             child: Column(
               children: [
                 SizedBox(
-                  height: 140,
+                  height: 130,
                   width: double.infinity,
                   child: GetBuilder<ArtikelController>(
                     builder: (controller) {
-                      return FutureBuilder<Uint8List?>(
-                        future: controller.getArtikelImage(artikel.imageId),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                          if (snapshot.hasData) {
-                            return ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                              clipBehavior: Clip.antiAlias,
-                              child: Image.memory(
-                                snapshot.data!,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
+                      final cachedImage =
+                          controller.imageCache[artikel.imageId];
+
+                      if (cachedImage != null) {
+                        return ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.memory(
+                            cachedImage,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      } else {
+                        return FutureBuilder<Uint8List?>(
+                          future: controller.getArtikelImage(artikel.imageId),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            if (snapshot.hasData) {
+                              return ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.memory(
+                                  snapshot.data!,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            }
+                            return Container(
+                              color: Colors.grey,
+                              child: const Icon(Icons.error),
                             );
-                          }
-                          return Container(
-                            color: Colors.grey,
-                            child: const Icon(Icons.error),
-                          );
-                        },
-                      );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
                 Container(
                   width: double.infinity,
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10)),
-                      color: Colors.green),
+                      color: AppColors.primary),
                   child: Text(
                     artikel.judul,
                     style: GoogleFonts.dmSans(
@@ -239,6 +267,8 @@ class ArtikelListView extends GetView<ArtikelController> {
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
