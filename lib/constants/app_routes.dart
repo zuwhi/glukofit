@@ -11,4 +11,6 @@ class AppRoutes {
   static const nutrisiProduk = '/nutrisiProduk';
   static const searchNutrisi = '/searchNutrisi';
   static const produkFromImage = '/produkFromImage';
+  static const homepage = '/homepage';
+  static const ai = '/ai';
 }

@@ -56,6 +56,16 @@ class DashboardView extends GetView<AuthController> {
                     Get.toNamed(AppRoutes.searchNutrisi);
                   },
                   child: const Text("search nutrisi")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.homepage);
+                  },
+                  child: const Text("homepage")),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.ai);
+                  },
+                  child: const Text('AI')),
               const SizedBox(height: 20),
               const Text(
                 "User Data:",

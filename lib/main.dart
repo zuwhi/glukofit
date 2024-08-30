@@ -5,9 +5,11 @@ import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/services/appwrite_service.dart';
 import 'package:glukofit/views/artikel/artikel_list_view.dart';
+import 'package:glukofit/views/chatbot/chatbot_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
 import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
 import 'package:glukofit/views/diagnosa/result_diagnosa_view.dart';
+import 'package:glukofit/views/homepage/homepage_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
 import 'package:glukofit/views/nutrisi/search_nutrisi.dart';
@@ -16,8 +18,12 @@ import 'package:glukofit/views/produk/produk_from_image_view.dart';
 import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:glukofit/services/gemini_service.dart';
+
 
 void main() async {
+    Gemini.init(apiKey: GEMINI_API_KEY);
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => AppwriteService().init());
   Get.put(AuthController());
@@ -75,6 +81,14 @@ void main() async {
         binding: BindingsBuilder(() {
           Get.put(ArtikelController());
         }),
+      ),
+      GetPage(
+        name: AppRoutes.homepage,
+        page: () => const HomePageScreen(),
+      ),
+            GetPage(
+        name: AppRoutes.ai,
+        page: () => const ChatBotGeminiPage(),
       ),
     ],
     initialRoute: AppRoutes.dashboard,
