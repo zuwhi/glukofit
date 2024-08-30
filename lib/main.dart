@@ -84,9 +84,30 @@ void main() async {
       ),
       GetPage(
         name: AppRoutes.profil,
-        page: () => ProfileView(),
+        page: () => const ProfileView(),
       ),
     ],
-    initialRoute: AppRoutes.dashboard,
+    // initialRoute: AppRoutes.welcome,
+    initialBinding: BindingsBuilder(() {
+      Get.put(AuthController());
+    }),
+    home: const Root(),
   ));
+}
+
+class Root extends StatelessWidget {
+  const Root({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetX<AuthController>(
+      builder: (controller) {
+        if (controller.isLoggedIn.value) {
+          return const DashboardView();
+        } else {
+          return const WelcomeView();
+        }
+      },
+    );
+  }
 }

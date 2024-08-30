@@ -71,7 +71,16 @@ class ArtikelListView extends GetView<ArtikelController> {
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 12.0, horizontal: 12.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
+                    cursorColor: AppColors.primary,
                   ),
                 ),
                 _buildCategoryFilter(),
@@ -105,7 +114,9 @@ class ArtikelListView extends GetView<ArtikelController> {
             builder: (_) {
               if (controller.isLoading.value) {
                 return const SliverFillRemaining(
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                      child:
+                          CircularProgressIndicator(color: AppColors.primary)),
                 );
               }
               return SliverPadding(
@@ -226,7 +237,8 @@ class ArtikelListView extends GetView<ArtikelController> {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
                               return const Center(
-                                  child: CircularProgressIndicator());
+                                  child: CircularProgressIndicator(
+                                      color: AppColors.primary));
                             }
                             if (snapshot.hasData) {
                               return ClipRRect(

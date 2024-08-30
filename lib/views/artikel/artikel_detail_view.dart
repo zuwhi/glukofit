@@ -61,7 +61,9 @@ class ArtikelDetailView extends GetView<ArtikelController> {
                 }
                 return const SizedBox(
                   height: 200,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                      child:
+                          CircularProgressIndicator(color: AppColors.primary)),
                 );
               },
             ),
