@@ -38,6 +38,11 @@ class DashboardView extends GetView<AuthController> {
                   child: const Text("logout")),
               ElevatedButton(
                   onPressed: () {
+                    Get.toNamed(AppRoutes.profile);
+                  },
+                  child: const Text("Go to profile")),
+              ElevatedButton(
+                  onPressed: () {
                     Get.toNamed(AppRoutes.artikel);
                   },
                   child: const Text("artikel")),

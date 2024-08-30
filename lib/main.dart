@@ -76,15 +76,16 @@ void main() async {
         binding: AuthBinding(),
       ),
       GetPage(
+        name: AppRoutes.profile,
+        page: () => const ProfileView(),
+        binding: AuthBinding(),
+      ),
+      GetPage(
         name: AppRoutes.artikel,
         page: () => const ArtikelListView(),
         binding: BindingsBuilder(() {
           Get.put(ArtikelController());
         }),
-      ),
-      GetPage(
-        name: AppRoutes.profil,
-        page: () => const ProfileView(),
       ),
     ],
     // initialRoute: AppRoutes.welcome,

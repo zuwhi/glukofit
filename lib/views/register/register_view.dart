@@ -44,7 +44,8 @@ class RegisterView extends GetView<AuthController> {
                   SizedBox(
                       height: 140,
                       width: 170,
-                      child: Image.asset('assets/icons/logo.png')),
+                      // child: Image.asset('assets/icons/logo.png')),
+                      child: Image.asset('assets/icons/sugaria_logo.png')),
                   const SizedBox(
                     height: 16,
                   ),
@@ -184,7 +185,7 @@ class RegisterView extends GetView<AuthController> {
                                   color: AppColors.orange),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Get.toNamed(AppRoutes.register);
+                                  Get.toNamed(AppRoutes.login);
                                 })
                         ]),
                   )

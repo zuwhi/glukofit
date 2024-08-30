@@ -97,7 +97,7 @@ class AuthController extends GetxController {
       await _appwriteService.logout();
       isLoggedIn.value = false;
       userData.value = {};
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/welcome');
     } catch (e) {
       Get.snackbar('Error', 'Failed to logout: $e');
     }

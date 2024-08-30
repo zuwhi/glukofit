@@ -80,28 +80,35 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: GoogleFonts.dmSans(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          title: Text(
+            'Profile',
+            style: GoogleFonts.dmSans(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        scrolledUnderElevation: 0.0,
-        centerTitle: true,
-        backgroundColor: AppColors.primary,
-        leading: IconButton(
-          icon: Image.asset(
-            'assets/icons/back.png',
-            width: 12,
-            height: 26,
+          scrolledUnderElevation: 0.0,
+          centerTitle: true,
+          backgroundColor: AppColors.primary,
+          leading: IconButton(
+            icon: Image.asset(
+              'assets/icons/back.png',
+              width: 12,
+              height: 26,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout, color: Colors.red),
+              onPressed: () {
+                controller.logout();
+              },
+            ),
+          ]),
       body: Obx(() {
         if (controller.isLoggedIn.value) {
           final userData = controller.userData.value;
