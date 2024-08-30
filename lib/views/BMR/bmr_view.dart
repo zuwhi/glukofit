@@ -358,11 +358,12 @@ class BmrView extends StatelessWidget {
                                 ),
                               ));
                             },
-                            isActive: int.parse(weightController.text) != 0 &&
-                                int.parse(heightController.text) != 0 &&
-                                int.parse(ageController.text) != 0 &&
-                                controller.option.value != null &&
-                                controller.gender.value != Gender.empty,
+                            // isActive: int.parse(weightController.text) != 0 &&
+                            //     int.parse(heightController.text) != 0 &&
+                            //     int.parse(ageController.text) != 0 &&
+                            //     controller.option.value != null &&
+                            //     controller.gender.value != Gender.empty,
+                            isActive: true,
                             backgroundColor: AppColors.orange,
                           )
                         ],
