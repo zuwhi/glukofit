@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/controllers/diagnosa_controller.dart';
 import 'package:glukofit/views/diagnosa/widgets/card_question_widget.dart';
 import 'package:glukofit/views/diagnosa/widgets/custom_choice_chip_widget.dart';
@@ -18,6 +19,21 @@ class QuestionOneSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DiagnosaController controller = Get.put(DiagnosaController());
+
+    final AuthController authController = Get.find();
+
+    if (authController.userData.value['berat'] != null) {
+      controller.weight.value =
+          authController.userData.value['berat'].toString();
+    }
+    if (authController.userData.value['tinggi'] != null) {
+      controller.height.value =
+          authController.userData.value['tinggi'].toString();
+    }
+    if (authController.userData.value['umur'] != null) {
+      controller.age.value = authController.userData.value['umur'].toString();
+    }
+
     final ageController = TextEditingController(text: controller.age.value);
     final weightController =
         TextEditingController(text: controller.weight.value);
@@ -33,7 +49,7 @@ class QuestionOneSectionWidget extends StatelessWidget {
         const SizedBox(height: 10.0),
         CustomFormDiagnoseWidget(
           keyboardType: TextInputType.number,
-          ageController: ageController,
+          controller: ageController,
           hintText: "Masukkan Umur",
           onChanged: (value) {
             controller.updateAge(value);
@@ -54,7 +70,7 @@ class QuestionOneSectionWidget extends StatelessWidget {
               Expanded(
                 child: CustomFormDiagnoseWidget(
                   keyboardType: TextInputType.number,
-                  ageController: weightController,
+                  controller: weightController,
                   hintText: "Berat",
                   suffixIcon: TextPrimary(
                     text: "kg  ",
@@ -71,7 +87,7 @@ class QuestionOneSectionWidget extends StatelessWidget {
               Expanded(
                 child: CustomFormDiagnoseWidget(
                   keyboardType: TextInputType.number,
-                  ageController: heightController,
+                  controller: heightController,
                   hintText: "Tinggi",
                   suffixIcon: TextPrimary(
                     text: "cm  ",

@@ -4,6 +4,8 @@ import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/services/appwrite_service.dart';
+import 'package:glukofit/views/BMI/kalkulator_BMI_view.dart';
+import 'package:glukofit/views/BMR/bmr_view.dart';
 import 'package:glukofit/views/artikel/artikel_list_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
 import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
@@ -16,6 +18,7 @@ import 'package:glukofit/views/produk/produk_from_image_view.dart';
 import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
+import 'package:glukofit/views/tracker/tracker_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,14 @@ void main() async {
   Get.put(AuthController());
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      canvasColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    ),
     getPages: [
       GetPage(
         name: AppRoutes.dashboard,
@@ -58,6 +69,18 @@ void main() async {
       GetPage(
         name: AppRoutes.produkFromImage,
         page: () => const ProdukFromImageView(),
+      ),
+      GetPage(
+        name: AppRoutes.kalkulatorBMI,
+        page: () => const KalkulatorBmiView(),
+      ),
+      GetPage(
+        name: AppRoutes.tracker,
+        page: () => const TrackerView(),
+      ),
+      GetPage(
+        name: AppRoutes.bmr,
+        page: () => const BmrView(),
       ),
       GetPage(
         name: AppRoutes.register,

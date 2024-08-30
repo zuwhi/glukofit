@@ -21,8 +21,10 @@ class ProdukController extends GetxController {
   final listFatscretProductScrap = Rx<List<FatsecretProductScrapModel>?>(null);
   final listPencarianNutrisi = Rx<List<FatsecretProductScrapModel>?>(null);
   final fatsecretNutrisiScrap = Rx<FatsecretNutrisiScrapModel?>(null);
+  final fatsecretTopNutrisiScrap = Rx<FatsecretNutrisiScrapModel?>(null);
   final RxBool isLoading = RxBool(false);
   final RxBool isLoadingOnNutritionView = RxBool(false);
+  final RxBool isLoadingOnTopNutritionView = RxBool(false);
   final RxBool isLoaded = RxBool(false);
   final scrapState = Rx<ProdukScrapState>(ProdukScrapState.emptyScrap);
   final Dio dio = Dio();
@@ -134,6 +136,20 @@ class ProdukController extends GetxController {
       Get.snackbar('Error', 'Failed to get list produk: $e');
     } finally {
       isLoadingOnNutritionView.value = false;
+    }
+  }
+  Future<void> getTopNutritionProductFromFatsecretScrap(String url) async {
+    try {
+      isLoadingOnTopNutritionView.value = true;
+      final response = await dio.get(
+          "https://scrap-gizi.vercel.app/scrape/fatsecret/product?url=$url");
+      final data = response.data;
+      fatsecretTopNutrisiScrap.value =
+          fatsecretNutrisiScrapModelFromJson(jsonEncode(data));
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to get list produk: $e');
+    } finally {
+      isLoadingOnTopNutritionView.value = false;
     }
   }
 }

@@ -11,4 +11,7 @@ class AppRoutes {
   static const nutrisiProduk = '/nutrisiProduk';
   static const searchNutrisi = '/searchNutrisi';
   static const produkFromImage = '/produkFromImage';
+  static const kalkulatorBMI = '/kalkulatorBMI';
+  static const tracker = '/tracker';
+  static const bmr = '/bmr';
 }
