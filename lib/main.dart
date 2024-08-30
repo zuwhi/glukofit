@@ -20,6 +20,7 @@ import 'package:glukofit/views/produk/produk_from_image_view.dart';
 import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
+import 'package:glukofit/views/splash_screen/splash_screen_view.dart';
 import 'package:glukofit/views/tracker/tracker_view.dart';
 
 void main() async {
@@ -110,28 +111,32 @@ void main() async {
           Get.put(ArtikelController());
         }),
       ),
+      GetPage(
+        name: AppRoutes.splashScreen,
+        page: () => const SplashScreen(),
+      ),
     ],
-    // initialRoute: AppRoutes.welcome,
+    initialRoute: AppRoutes.splashScreen,
     initialBinding: BindingsBuilder(() {
       Get.put(AuthController());
     }),
-    home: const Root(),
+    // home: const Root(),
   ));
 }
 
-class Root extends StatelessWidget {
-  const Root({super.key});
+// class Root extends StatelessWidget {
+//   const Root({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return GetX<AuthController>(
-      builder: (controller) {
-        if (controller.isLoggedIn.value) {
-          return const DashboardView();
-        } else {
-          return const WelcomeView();
-        }
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetX<AuthController>(
+//       builder: (controller) {
+//         if (controller.isLoggedIn.value) {
+//           return const DashboardView();
+//         } else {
+//           return const WelcomeView();
+//         }
+//       },
+//     );
+//   }
+// }

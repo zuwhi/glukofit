@@ -236,7 +236,7 @@ class BmrView extends StatelessWidget {
                             isExpanded: true,
                             underline: Container(),
                             borderRadius: BorderRadius.circular(25),
-                            menuWidth: double.infinity,
+                            // menuWidth: double.infinity,
                             focusColor: AppColors.orange,
                             hint: const Text('klik disini'),
                             value: listOption.contains(controller.option.value)

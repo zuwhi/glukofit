@@ -16,4 +16,5 @@ class AppRoutes {
   static const tracker = '/tracker';
   static const bmr = '/bmr';
   static const profile = '/profile';
+  static const splashScreen = '/splashScreen';
 }
