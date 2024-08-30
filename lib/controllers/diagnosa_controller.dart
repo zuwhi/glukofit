@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_constant.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/models/diagnosa_model.dart';
-import 'package:glukofit/services/diagnosa_service.dart';
+import 'package:logger/logger.dart';
 
 class DiagnosaController extends GetxController {
   RxInt currentIndex = 1.obs;
@@ -11,16 +13,25 @@ class DiagnosaController extends GetxController {
   RxBool question1 = false.obs;
   RxBool question2 = false.obs;
   RxBool question3 = false.obs;
+  RxBool isLoading = false.obs;
 
   Future<void> sendRequest() async {
     try {
-      final response = await DiagnosaService.sendRequest(diagnosaModel.value);
+      isLoading.value = true;
+      Dio dio = Dio();
+      String url = AppConstant.urlDiagnose;
+      final res =
+          await dio.post('$url/predict', data: diagnosaModel.value.toJson());
+      Logger().d(res.data["predictions"][0]);
+      final response = res.data["predictions"][0];
       if (response != null) {
         Get.toNamed(AppRoutes.resultDiagnosa,
             arguments: {'diagnosa': response});
       }
     } catch (e) {
-      Get.snackbar('Error', "Maaf terjadi kesalahan jaringan $e");
+      Get.snackbar('Error', "Maaf terjadi kesalahan ");
+    } finally {
+      isLoading.value = false;
     }
   }
 

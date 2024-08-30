@@ -9,7 +9,6 @@ class DiagnosaService {
       Dio dio = Dio();
       String url = AppConstant.urlDiagnose;
       final res = await dio.post('$url/predict', data: dataDiagnosa.toJson());
-      Logger().d(res.data["predictions"][0]);
       return '${res.data["predictions"][0]}';
     } catch (e) {
       Logger().d(e);

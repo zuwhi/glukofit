@@ -15,6 +15,9 @@ class CardNutritionLabelWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
       // height: MediaQuery.of(context).size.height / 1.2,
       decoration: BoxDecoration(
         border: Border.all(

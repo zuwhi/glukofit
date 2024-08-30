@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
@@ -8,7 +9,6 @@ import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 import 'package:glukofit/views/artikel/widgets/card.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ArtikelListView extends GetView<ArtikelController> {
   const ArtikelListView({super.key});

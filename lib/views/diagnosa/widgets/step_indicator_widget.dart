@@ -17,10 +17,11 @@ class StepIndicatorWidget extends StatelessWidget {
         size: 8,
         roundedEdges: const Radius.circular(25),
         totalSteps: 3,
+
         currentStep: controller.currentIndex.value,
         selectedColor: AppColors.orange,
         unselectedColor: Colors.grey.shade300,
-        onTap: (index) => () => controller.updateCurrentIndex(index + 1),
+        // onTap: (index) => () => controller.updateCurrentIndex(index + 1),
       ),
     );
   }
