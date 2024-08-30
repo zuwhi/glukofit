@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/services/appwrite_service.dart';
@@ -9,7 +12,7 @@ class AuthController extends GetxController {
   final isLoading = false.obs;
   final errorMessage = ''.obs;
   final userData = Rx<Map<String, dynamic>>({});
-
+  Rx<Uint8List?> profileImage = Rx<Uint8List?>(null);
   @override
   void onInit() {
     super.onInit();
@@ -30,6 +33,10 @@ class AuthController extends GetxController {
     try {
       final data = await _appwriteService.getUserDocument(userId);
       userData.value = data;
+      if (userData.value['imageId'] != null &&
+          userData.value['imageId'] != '') {
+        await getProfileImage(userData.value['imageId']);
+      }
     } catch (e) {
       print('Error getting user data: $e');
     }
@@ -39,10 +46,6 @@ class AuthController extends GetxController {
     String email,
     String password,
     String nama,
-    String status,
-    int umur,
-    int tinggi,
-    int berat,
   ) async {
     isLoading.value = true;
     errorMessage.value = '';
@@ -55,10 +58,6 @@ class AuthController extends GetxController {
         account.$id,
         email,
         nama,
-        status,
-        umur,
-        tinggi,
-        berat,
       );
 
       Get.snackbar('Success', 'Account created successfully');
@@ -98,48 +97,75 @@ class AuthController extends GetxController {
       await _appwriteService.logout();
       isLoggedIn.value = false;
       userData.value = {};
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/welcome');
     } catch (e) {
       Get.snackbar('Error', 'Failed to logout: $e');
     }
   }
 
-  /*
   Future<void> updateUser({
     required String nama,
     required String status,
+    required String email,
+    required String phone,
+    required String role,
     required int umur,
     required int tinggi,
     required int berat,
+    File? newImage,
   }) async {
     isLoading.value = true;
     errorMessage.value = '';
 
     try {
       final currentUser = await _appwriteService.account.get();
-      final updatedData = Map<String, dynamic>.from(userData.value);
-      
-      updatedData['nama'] = nama;
-      updatedData['status'] = status;
-      updatedData['umur'] = umur;
-      updatedData['tinggi'] = tinggi;
-      updatedData['berat'] = berat;
+      final updatedData = {
+        'nama': nama,
+        'status': status,
+        'tinggi': tinggi,
+        'berat': berat,
+        'umur': umur,
+        'phone': phone,
+      };
+
+      if (newImage != null) {
+        if (userData.value['imageId'] != null &&
+            userData.value['imageId'].isNotEmpty) {
+          await _appwriteService.deleteUserImage(userData.value['imageId']);
+        }
+
+        final imageId =
+            await _appwriteService.uploadUserImage(newImage, currentUser.$id);
+        updatedData['imageId'] = imageId;
+      } else {
+        updatedData['imageId'] = '';
+      }
 
       await _appwriteService.updateUserDocument(
         currentUser.$id,
         updatedData,
       );
 
-      userData.value = updatedData;
+      userData.value = {...userData.value, ...updatedData};
       Get.snackbar('Success', 'User data updated successfully');
     } catch (e) {
       errorMessage.value = e.toString();
-      Get.snackbar('Error', 'Failed to update user data');
+      Get.snackbar('Error', e.toString());
     } finally {
       isLoading.value = false;
     }
   }
-  */
+
+  Future<void> getProfileImage(String imageId) async {
+    try {
+      final res = await _appwriteService.getProfileImage(
+        imageId,
+      );
+      profileImage.value = res;
+    } catch (e) {
+      profileImage.value = null;
+    }
+  }
 }
 
 class LogoutBinding extends Bindings {

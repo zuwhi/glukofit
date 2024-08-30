@@ -12,6 +12,8 @@ import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
 import 'package:glukofit/views/diagnosa/result_diagnosa_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
+import 'package:glukofit/views/login/welcome_view.dart';
+import 'package:glukofit/views/profile/profile_view.dart';
 import 'package:glukofit/views/nutrisi/search_nutrisi.dart';
 import 'package:glukofit/views/produk/nutrisi_produk_view.dart';
 import 'package:glukofit/views/produk/produk_from_image_view.dart';
@@ -45,6 +47,10 @@ void main() async {
       GetPage(
         name: AppRoutes.scanner,
         page: () => const ScannerView(),
+      ),
+      GetPage(
+        name: AppRoutes.welcome,
+        page: () => const WelcomeView(),
       ),
       GetPage(
         name: AppRoutes.detailProduk,
@@ -93,6 +99,11 @@ void main() async {
         binding: AuthBinding(),
       ),
       GetPage(
+        name: AppRoutes.profile,
+        page: () => const ProfileView(),
+        binding: AuthBinding(),
+      ),
+      GetPage(
         name: AppRoutes.artikel,
         page: () => const ArtikelListView(),
         binding: BindingsBuilder(() {
@@ -100,6 +111,27 @@ void main() async {
         }),
       ),
     ],
-    initialRoute: AppRoutes.dashboard,
+    // initialRoute: AppRoutes.welcome,
+    initialBinding: BindingsBuilder(() {
+      Get.put(AuthController());
+    }),
+    home: const Root(),
   ));
+}
+
+class Root extends StatelessWidget {
+  const Root({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetX<AuthController>(
+      builder: (controller) {
+        if (controller.isLoggedIn.value) {
+          return const DashboardView();
+        } else {
+          return const WelcomeView();
+        }
+      },
+    );
+  }
 }
