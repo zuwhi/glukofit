@@ -137,8 +137,6 @@ class AuthController extends GetxController {
         final imageId =
             await _appwriteService.uploadUserImage(newImage, currentUser.$id);
         updatedData['imageId'] = imageId;
-      } else {
-        updatedData['imageId'] = '';
       }
 
       await _appwriteService.updateUserDocument(
@@ -146,7 +144,13 @@ class AuthController extends GetxController {
         updatedData,
       );
 
-      userData.value = {...userData.value, ...updatedData};
+      userData.value = {
+        ...userData.value,
+        ...updatedData,
+        'imageId': newImage != null
+            ? updatedData['imageId']
+            : userData.value['imageId'],
+      };
       Get.snackbar('Success', 'User data updated successfully');
     } catch (e) {
       errorMessage.value = e.toString();
