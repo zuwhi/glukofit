@@ -8,6 +8,7 @@ class LoginView extends GetView<AuthController> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final RxBool _isPasswordVisible = false.obs;
 
   LoginView({super.key});
 
@@ -73,26 +74,35 @@ class LoginView extends GetView<AuthController> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 24.0, horizontal: 12.0),
-                    ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password tidak boleh kosong';
-                      } else if (value.length < 8) {
-                        return 'Password harus minimal 8 karakter';
-                      }
-                      return null;
-                    },
-                  ),
+                  Obx(() => TextFormField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () => _isPasswordVisible.value =
+                                !_isPasswordVisible.value,
+                          ),
+                          labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 24.0, horizontal: 12.0),
+                        ),
+                        obscureText: !_isPasswordVisible.value,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Password tidak boleh kosong';
+                          } else if (value.length < 8) {
+                            return 'Password harus minimal 8 karakter';
+                          }
+                          return null;
+                        },
+                      )),
                   const SizedBox(height: 24),
                   SizedBox(
                     height: 60,
