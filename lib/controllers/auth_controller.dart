@@ -83,7 +83,7 @@ class AuthController extends GetxController {
       isLoggedIn.value = true;
       await getUserData(session.userId);
       Get.snackbar('Success', 'Logged in successfully');
-      Get.offAllNamed(AppRoutes.dashboard);
+      Get.offAllNamed(AppRoutes.homepage);
     } catch (e) {
       errorMessage.value = e.toString();
       Get.snackbar('Error', 'Failed to login');
