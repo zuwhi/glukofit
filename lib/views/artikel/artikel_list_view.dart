@@ -8,7 +8,10 @@ import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 import 'package:glukofit/views/artikel/widgets/card.dart';
+import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../constants/app_routes.dart';
 
 class ArtikelListView extends GetView<ArtikelController> {
   const ArtikelListView({super.key});
@@ -141,6 +144,21 @@ class ArtikelListView extends GetView<ArtikelController> {
           ),
         ],
       ),
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
+        onPressed: () {
+          Get.toNamed(AppRoutes.scanner);
+        },
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.circle,
+          size: 50,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 
@@ -288,6 +306,8 @@ class ArtikelListView extends GetView<ArtikelController> {
           ),
         );
       },
+      
     );
+    
   }
 }

@@ -47,7 +47,7 @@ void main() async {
     getPages: [
       GetPage(
         name: AppRoutes.dashboard,
-        page: () => const DashboardView(),
+        page: () => const HomePageScreen(),
         binding: BindingsBuilder(() {
           Get.put(AuthController());
         }),
@@ -117,10 +117,6 @@ void main() async {
         binding: BindingsBuilder(() {
           Get.put(ArtikelController());
         }),
-      ),
-      GetPage(
-        name: AppRoutes.homepage,
-        page: () => const HomePageScreen(),
       ),
             GetPage(
         name: AppRoutes.ai,

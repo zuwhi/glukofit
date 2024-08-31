@@ -25,7 +25,7 @@ class CustomBottomNavBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Get.toNamed(AppRoutes.homepage);
+              Get.toNamed(AppRoutes.dashboard);
             },
           ),
           IconButton(

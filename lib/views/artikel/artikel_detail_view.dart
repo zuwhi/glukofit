@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
+import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../constants/app_routes.dart';
 
 class ArtikelDetailView extends GetView<ArtikelController> {
   final ArtikelModel artikel;
@@ -93,26 +96,33 @@ class ArtikelDetailView extends GetView<ArtikelController> {
                   GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 8),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: IconButton(
-            //     icon: const Icon(
-            //       Icons.comment,
-            //       size: 30,
-            //       color: Color(0xFFA6A4A4),
-            //     ),
-            //     onPressed: () {},
-            //   ),
-            // ),
             Text(
               artikel.deskripsi,
               textAlign: TextAlign.justify,
               style:
                   GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500),
             ),
+            SizedBox(
+              height: 80,
+            )
           ],
         ),
       ),
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
+        onPressed: () {
+          Get.toNamed(AppRoutes.scanner);
+        },
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.circle,
+          size: 50,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }
