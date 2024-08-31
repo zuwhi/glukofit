@@ -3,12 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
-import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
-import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
+import 'package:glukofit/models/artikel_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../constants/app_routes.dart';
 
 class ArtikelDetailView extends GetView<ArtikelController> {
   final ArtikelModel artikel;
@@ -102,27 +99,13 @@ class ArtikelDetailView extends GetView<ArtikelController> {
               style:
                   GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 80,
             )
           ],
         ),
       ),
       extendBody: true,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
-        onPressed: () {
-          Get.toNamed(AppRoutes.scanner);
-        },
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.circle,
-          size: 50,
-          color: Colors.white,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }
