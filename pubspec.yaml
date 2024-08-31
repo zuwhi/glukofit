@@ -32,6 +32,7 @@ dependencies:
   syncfusion_flutter_gauges: ^26.2.8
   timeline_tile: ^2.0.0
   flutter_quill: ^9.0.0
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -46,6 +47,12 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/tensorflow/
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/logo.png"
+  min_sdk_android: 21
   # fonts:
   #   - family: Schyler
   #     fonts:
