@@ -19,7 +19,7 @@ class DiagnosaView extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: TextPrimary(
-            text: 'Diagnosa',
+            text: 'Diagnosa Awal',
             color: Colors.white,
           ),
           centerTitle: true,

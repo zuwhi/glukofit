@@ -184,12 +184,12 @@ class _ProfileViewState extends State<ProfileView> {
             child: ListView(
               children: [
                 SizedBox(
-                  height: 260,
+                  height: 200,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
                       Container(
-                        height: 140.0,
+                        height: 95.0,
                         color: AppColors.primary,
                       ),
                       Positioned(
@@ -197,22 +197,23 @@ class _ProfileViewState extends State<ProfileView> {
                         child: Column(
                           children: [
                             CircleAvatar(
-                              radius: 70,
+                              radius: 60,
                               backgroundColor: Colors.white,
                               child: image != null
                                   ? CircleAvatar(
-                                      radius: 65,
+                                      radius: 55,
                                       backgroundImage: FileImage(image!),
                                     )
                                   : (userData['imageId'] != '' &&
                                           userData['imageId'] != null)
                                       ? CircleAvatar(
-                                          radius: 65,
+                                          radius: 55,
                                           backgroundImage: MemoryImage(
                                               controller.profileImage.value!),
                                         )
                                       : const CircleAvatar(
-                                          radius: 65,
+                                          radius: 55,
+                                          backgroundColor: Colors.black12,
                                           child: Icon(
                                             Icons.person,
                                             size: 50,
@@ -239,7 +240,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
+                      horizontal: 25.0, vertical: 0.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
