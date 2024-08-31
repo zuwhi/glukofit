@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:glukofit/controllers/artikel_controller.dart';
 import 'package:glukofit/models/artikel_model.dart';
+import 'package:glukofit/views/artikel/widgets/card.dart';
 import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
-
-import '../artikel/artikel_detail_view.dart';
+import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
-
-    void navigateToDetailPage(ArtikelModel artikel) {
-    Get.to(() => ArtikelDetailView(artikel: artikel));
-  }
 
   @override
   State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
+  void navigateToDetailPage(ArtikelModel artikel) {
+    Get.to(() => ArtikelDetailView(artikel: artikel));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final artikelController = Get.find<ArtikelController>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -254,22 +258,32 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   height: 20,
                 ),
                 Container(
-                  height: 400,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    children: [
-                      createGridItem('assets/images/test.jpg',
-                          'Kenali beberapa obat untuk penyakit diabetes'),
-                      createGridItem('assets/images/test.jpg',
-                          'Sering merasa pusing? Kenali obat pereda rasa sakit'),
-                      createGridItem('assets/images/test.jpg',
-                          'Kenali beberapa obat untuk penyakit diabetes'),
-                      createGridItem('assets/images/test.jpg',
-                          'Sering merasa pusing? Kenali obat pereda rasa sakit'),
-                    ],
-                  ),
+                  height: 300,
+                  child: Obx(() {
+                    final controller = Get.find<ArtikelController>();
+
+                    if (controller.isLoading.value) {
+                      return _buildLoadingIndicator();
+                    }
+
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15.0,
+                        mainAxisSpacing: 20.0,
+                      ),
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        final artikel = controller.filteredArtikels[index];
+                        return ArtikelCard(
+                          artikel: artikel,
+                          onTap: () => navigateToDetailPage(artikel),
+                          isLarge: index % 70 == 15,
+                        );
+                      },
+                    );
+                  }),
                 )
               ],
             ),
@@ -331,6 +345,27 @@ class _HomePageScreenState extends State<HomePageScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const SliverFillRemaining(
+      child: Center(
+        child: CircularProgressIndicator(
+          color: AppColors.primary,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorIndicator(String errorMessage) {
+    return SliverFillRemaining(
+      child: Center(
+        child: Text(
+          errorMessage,
+          style: const TextStyle(color: Colors.red),
+        ),
       ),
     );
   }

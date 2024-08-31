@@ -32,6 +32,7 @@ void main() async {
     Gemini.init(apiKey: GEMINI_API_KEY);
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => AppwriteService().init());
+  Get.put(ArtikelController());
   Get.put(AuthController());
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
@@ -133,7 +134,10 @@ void main() async {
     initialRoute: AppRoutes.splashScreen,
     initialBinding: BindingsBuilder(() {
       Get.put(AuthController());
+      // Get.put(() => ArtikelController());
+
     }),
+    
     // home: const Root(),
   ));
 }
