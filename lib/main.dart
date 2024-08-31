@@ -7,9 +7,11 @@ import 'package:glukofit/services/appwrite_service.dart';
 import 'package:glukofit/views/BMI/kalkulator_BMI_view.dart';
 import 'package:glukofit/views/BMR/bmr_view.dart';
 import 'package:glukofit/views/artikel/artikel_list_view.dart';
+import 'package:glukofit/views/chatbot/chatbot_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
 import 'package:glukofit/views/diagnosa/diagnosa_view.dart';
 import 'package:glukofit/views/diagnosa/result_diagnosa_view.dart';
+import 'package:glukofit/views/homepage/homepage_view.dart';
 import 'package:glukofit/views/login/auth_binding.dart';
 import 'package:glukofit/views/login/login_view.dart';
 import 'package:glukofit/views/login/welcome_view.dart';
@@ -20,12 +22,17 @@ import 'package:glukofit/views/produk/produk_from_image_view.dart';
 import 'package:glukofit/views/produk/produk_view.dart';
 import 'package:glukofit/views/register/register_view.dart';
 import 'package:glukofit/views/scanner/scanner_view.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:glukofit/services/gemini_service.dart';
+
 import 'package:glukofit/views/splash_screen/splash_screen_view.dart';
 import 'package:glukofit/views/tracker/tracker_view.dart';
 
 void main() async {
+    Gemini.init(apiKey: GEMINI_API_KEY);
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => AppwriteService().init());
+  Get.put(ArtikelController());
   Get.put(AuthController());
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
@@ -40,7 +47,7 @@ void main() async {
     getPages: [
       GetPage(
         name: AppRoutes.dashboard,
-        page: () => const DashboardView(),
+        page: () => const HomePageScreen(),
         binding: BindingsBuilder(() {
           Get.put(AuthController());
         }),
@@ -111,6 +118,10 @@ void main() async {
           Get.put(ArtikelController());
         }),
       ),
+            GetPage(
+        name: AppRoutes.ai,
+        page: () => const ChatBotGeminiPage(),
+      ),
       GetPage(
         name: AppRoutes.splashScreen,
         page: () => const SplashScreen(),
@@ -119,7 +130,10 @@ void main() async {
     initialRoute: AppRoutes.splashScreen,
     initialBinding: BindingsBuilder(() {
       Get.put(AuthController());
+      // Get.put(() => ArtikelController());
+
     }),
+    
     // home: const Root(),
   ));
 }

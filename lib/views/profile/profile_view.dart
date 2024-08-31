@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../constants/app_routes.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -119,8 +122,7 @@ class _ProfileViewState extends State<ProfileView> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                      mainAxisSize: MainAxisSize
-                          .min, 
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(
                           height: 10.0,
@@ -343,6 +345,21 @@ class _ProfileViewState extends State<ProfileView> {
           );
         }
       }),
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
+        onPressed: () {
+          Get.toNamed(AppRoutes.scanner);
+        },
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.circle,
+          size: 50,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 

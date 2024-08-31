@@ -13,6 +13,7 @@ class ArtikelController extends GetxController {
   final RxString selectedKategori = 'Semua'.obs;
   final searchController = TextEditingController();
   final Map<String, Uint8List> imageCache = {};
+  
 
   @override
   void onInit() {
