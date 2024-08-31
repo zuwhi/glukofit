@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 
 import '../../constants/app_routes.dart';
 
@@ -11,7 +12,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return BottomAppBar(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       height: 60,
-      color: Color.fromARGB(255, 48, 94, 214),
+      color: AppColors.primary,
       shape: const CircularNotchedRectangle(),
       notchMargin: 5,
       child: Row(

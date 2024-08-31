@@ -28,27 +28,22 @@ class TrackerController extends GetxController {
   final listTracker = Rx<List<TrackerModel>>([]);
   AppwriteTrackerService trackerService = AppwriteTrackerService();
   AppwriteBmrService bmrService = AppwriteBmrService();
-  void calculateTotalKalori() {
-    totalKalori.value = 0;
-    for (var tracker in listTracker.value) {
-      totalKalori.value += tracker.kalori ?? 0;
-    }
-  }
 
   void countKalori(userId) async {
     try {
       isLoadingGetBMR.value = true;
-      final BMRModel response = await bmrService.getBmr(userId);
-      bmrTotal.value = response.total!;
+      final BMRModel? response = await bmrService.getBmr(userId);
+
+      bmrTotal.value = response!.total!.toDouble();
       bmrId.value = response.id;
 
       restKalori.value = bmrTotal.value - totalKaloriToday.value;
     } catch (e) {
       Logger().d(e);
-      Get.snackbar(
-        'Error',
-        "terjadi kesalahan $e",
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   "terjadi kesalahan $e",
+      // );
     } finally {
       isLoadingGetBMR.value = false;
     }
@@ -63,14 +58,34 @@ class TrackerController extends GetxController {
       totalKalori.value = 0;
       totalKaloriToday.value = 0;
       for (TrackerModel tracker in listTracker.value) {
-        if (pickedTime.value ==
-            DateFormat('yyyy-MM-dd').format(DateTime.now())) {
-          totalKaloriToday.value += tracker.kalori ?? 0;
-          restKalori.value = bmrTotal.value - totalKaloriToday.value;
-        }
+        // if (pickedTime.value ==
+        //     DateFormat('yyyy-MM-dd').format(DateTime.now())) {
+        //   totalKaloriToday.value += tracker.kalori ?? 0;
+        //   restKalori.value = bmrTotal.value - totalKaloriToday.value;
+        // }
         totalKalori.value += tracker.kalori ?? 0;
         restKalori.value = bmrTotal.value - totalKalori.value;
       }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void getListTrackerToday() async {
+    isLoading.value = true;
+    try {
+      final response = await trackerService.getListTracker(
+          DateFormat('yyyy-MM-dd').format(DateTime.now()), userId.value);
+      listTracker.value = response;
+      totalKalori.value = 0;
+      totalKaloriToday.value = 0;
+      for (TrackerModel tracker in listTracker.value) {
+        print('ceeeeek');
+        Logger().d(tracker.kalori);
+        totalKalori.value += tracker.kalori ?? 0;
+        restKalori.value = bmrTotal.value - totalKalori.value;
+      }
+      Logger().d(totalKalori);
     } finally {
       isLoading.value = false;
     }

@@ -19,8 +19,9 @@ class CardPointNutrition extends StatelessWidget {
         height: 90,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
+          color: AppColors.primary.withOpacity(0.9),
           borderRadius: BorderRadius.circular(13),
-          border: Border.all(color: AppColors.primary, width: 1),
+          // border: Border.all(color: AppColors.primary, width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,12 +37,14 @@ class CardPointNutrition extends StatelessWidget {
             TextPrimary(
               text: title,
               fontSize: 14.0,
-              color: Colors.grey.shade700,
+              // color: Colors.grey.shade700,
+              color: Colors.white,
             ),
             TextPrimary(
               text: value,
               fontSize: 14.0,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             )
           ],
         ),

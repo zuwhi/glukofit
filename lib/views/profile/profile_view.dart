@@ -2,11 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
+import 'package:glukofit/views/global_widgets/button_primary.dart';
+import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../constants/app_routes.dart';
@@ -112,7 +114,65 @@ class _ProfileViewState extends State<ProfileView> {
                 size: 24,
               ),
               onPressed: () {
-                controller.logout();
+                Get.dialog(Dialog(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        const Text(
+                          "Konfirmasi",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          "Apakah Anda yakin ingin keluar dari akun ini?",
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: TextPrimary(
+                                  text: "Batal",
+                                  color: AppColors.primary,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: ButtonPrimary(
+                                text: "Keluar",
+                                onPressed: () {
+                                  controller.logout();
+                                },
+                                isActive: true,
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ));
               },
             ),
           ]),
@@ -124,12 +184,12 @@ class _ProfileViewState extends State<ProfileView> {
             child: ListView(
               children: [
                 SizedBox(
-                  height: 260,
+                  height: 200,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
                       Container(
-                        height: 140.0,
+                        height: 95.0,
                         color: AppColors.primary,
                       ),
                       Positioned(
@@ -137,22 +197,23 @@ class _ProfileViewState extends State<ProfileView> {
                         child: Column(
                           children: [
                             CircleAvatar(
-                              radius: 70,
+                              radius: 60,
                               backgroundColor: Colors.white,
                               child: image != null
                                   ? CircleAvatar(
-                                      radius: 65,
+                                      radius: 55,
                                       backgroundImage: FileImage(image!),
                                     )
                                   : (userData['imageId'] != '' &&
                                           userData['imageId'] != null)
                                       ? CircleAvatar(
-                                          radius: 65,
+                                          radius: 55,
                                           backgroundImage: MemoryImage(
                                               controller.profileImage.value!),
                                         )
                                       : const CircleAvatar(
-                                          radius: 65,
+                                          radius: 55,
+                                          backgroundColor: Colors.black12,
                                           child: Icon(
                                             Icons.person,
                                             size: 50,
@@ -179,7 +240,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
+                      horizontal: 25.0, vertical: 0.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -301,7 +362,6 @@ class _ProfileViewState extends State<ProfileView> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const CustomBottomNavBar(),
     );
-    
   }
 
   Widget _buildLabel(String label) {
