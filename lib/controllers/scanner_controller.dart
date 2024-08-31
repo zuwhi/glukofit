@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
-import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/models/scan_model.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';

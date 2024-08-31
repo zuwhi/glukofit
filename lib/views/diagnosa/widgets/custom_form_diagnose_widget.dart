@@ -4,12 +4,12 @@ class CustomFormDiagnoseWidget extends StatelessWidget {
   const CustomFormDiagnoseWidget(
       {super.key,
       this.keyboardType,
-      required this.ageController,
+      required this.controller,
       required this.onChanged,
       this.suffixIcon,
       required this.hintText});
 
-  final TextEditingController ageController;
+  final TextEditingController controller;
   final void Function(String)? onChanged;
   final String hintText;
   final Widget? suffixIcon;
@@ -33,7 +33,7 @@ class CustomFormDiagnoseWidget extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
-              controller: ageController,
+              controller: controller,
               keyboardType: keyboardType,
               decoration: InputDecoration(
                 suffixIcon: suffixIcon,

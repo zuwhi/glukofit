@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/produk_controller.dart';
 import 'package:glukofit/models/fatsecret_product_model.dart';
+import 'package:glukofit/models/tracker_model.dart';
+import 'package:glukofit/views/global_widgets/bottom_sheet_add_nutrition_widget.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
+import 'package:glukofit/views/produk/widgets/card_nutrition_glice.dart';
 import 'package:glukofit/views/produk/widgets/card_nutrition_label_widget.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class NutrisiProdukView extends StatelessWidget {
   const NutrisiProdukView({super.key});
@@ -34,17 +36,56 @@ class NutrisiProdukView extends StatelessWidget {
 
     final ProdukController controller = Get.put(ProdukController());
     controller.getNutritionProductFromFatsecretScrap(product.link!);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
+        actions: [
+          InkWell(
+            onTap: () {
+              final TrackerModel tracker = TrackerModel(
+                  id: '0',
+                  keterangan: "konsumsi ${product.productName}",
+                  kalori: int.parse(controller
+                      .fatsecretNutrisiScrap.value!.energyKcal!
+                      .replaceAll(" kkal", "")));
+              Get.bottomSheet(BottomSheetAddNutritionWidget(
+                trackFromEdit: tracker,
+                isFromSearch: true,
+              ));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 7.0),
+              child: Row(
+                children: [
+                  TextPrimary(
+                    text: "Simpan kalori",
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.orange,
+                  ),
+                  const SizedBox(
+                    width: 4.0,
+                  ),
+                  const Icon(
+                    Icons.add,
+                    color: AppColors.orange,
+                  ),
+                  const SizedBox(
+                    width: 7.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
+              horizontal: 15.0,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,73 +111,17 @@ class NutrisiProdukView extends StatelessWidget {
                     ),
                   ],
                 ),
+                TextPrimary(
+                  text: "Nutrisi Sekilas :",
+                  fontSize: 18.0,
+                ),
+                const SizedBox(
+                  height: 15.0,
+                ),
+                CardNutritionGlaceWidget(controller: controller),
                 const SizedBox(
                   height: 20.0,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextPrimary(
-                      text: "Kategori kadar gula :",
-                      fontSize: 18.0,
-                    ),
-                    Obx(() => controller.isLoadingOnNutritionView.value
-                        ? Container()
-                        : KategoriGulaWidget(
-                            jmlGula: double.parse(controller
-                                .fatsecretNutrisiScrap.value!.sugars!
-                                .replaceAll('g', '')
-                                .replaceAll(',', '.')),
-                          ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Obx(() => controller.isLoadingOnNutritionView.value
-                    ? Container()
-                    : SfLinearGauge(
-                        minorTicksPerInterval: 4,
-                        useRangeColorForAxis: true,
-                        animateAxis: true,
-                        minimum: 0,
-                        maximum: 25,
-                        axisTrackStyle:
-                            const LinearAxisTrackStyle(thickness: 1),
-                        markerPointers: [
-                          LinearShapePointer(
-                            value: double.parse(controller
-                                .fatsecretNutrisiScrap.value!.sugars!
-                                .replaceAll('g', '')
-                                .replaceAll(',', '.')),
-                            height: 20,
-                            width: 20,
-                            color: AppColors.orange,
-                          )
-                        ],
-                        ranges: const <LinearGaugeRange>[
-                          LinearGaugeRange(
-                            startValue: 0,
-                            endValue: 5,
-                            position: LinearElementPosition.outside,
-                            color: Colors.green,
-                          ),
-                          LinearGaugeRange(
-                              startValue: 5,
-                              endValue: 15,
-                              position: LinearElementPosition.outside,
-                              color: Colors.yellow),
-                          LinearGaugeRange(
-                              startValue: 15,
-                              endValue: 25,
-                              position: LinearElementPosition.outside,
-                              color: Colors.red),
-                        ],
-                      )),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                // CardNutritionLabelWidget(nutrisi: nutrisi)
                 Obx(() => controller.isLoadingOnNutritionView.value
                     ? const SizedBox(
                         height: 400,

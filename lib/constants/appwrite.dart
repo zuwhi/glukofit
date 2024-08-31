@@ -6,4 +6,7 @@ class AppwriteConstants {
   static const String artikelCollectionId = 'artikelCollection';
   static const String produkCollectionId = 'produkCollection';
   static const String artikelBucketId = '66aedb5300067ab059c0';
+  static const String riwayatCollectionId = '66cd282300340308e059';
+  static const String kaloriCollectionId = 'kaloriId';
+  static const String userBucketId = 'userBucketId';
 }

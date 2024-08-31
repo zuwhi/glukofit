@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'dart:io' as io;
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
@@ -46,7 +46,6 @@ class AppwriteService extends GetxService {
       );
       return document.data;
     } catch (e) {
-      print('Error getting user document: $e');
       rethrow;
     }
   }
@@ -70,10 +69,6 @@ class AppwriteService extends GetxService {
     String userId,
     String email,
     String nama,
-    String status,
-    int umur,
-    int tinggi,
-    int berat,
   ) async {
     try {
       await databases.createDocument(
@@ -83,14 +78,15 @@ class AppwriteService extends GetxService {
         data: {
           'email': email,
           'nama': nama,
-          'status': status,
-          'umur': umur,
-          'tinggi': tinggi,
-          'berat': berat,
+          'status': 'Non Diabetes',
+          'umur': 0,
+          'tinggi': 0,
+          'berat': 0,
+          'imageId': '',
+          'role': 'user'
         },
       );
     } catch (e) {
-      print('Failed to create user document: $e');
       throw Exception('Failed to initialize user data');
     }
   }
@@ -113,8 +109,43 @@ class AppwriteService extends GetxService {
       await account.deleteSession(sessionId: 'current');
       Get.offAllNamed(AppRoutes.dashboard);
     } catch (e) {
-      print('Logout error: $e');
       rethrow;
+    }
+  }
+
+  Future<String> uploadUserImage(io.File file, String fileName) async {
+    try {
+      final result = await storage.createFile(
+        bucketId: AppwriteConstants.userBucketId,
+        fileId: ID.unique(),
+        file: InputFile.fromPath(path: file.path, filename: fileName),
+      );
+      return result.$id;
+    } on AppwriteException catch (e) {
+      throw Exception('Failed to upload file: ${e.message}');
+    }
+  }
+
+  Future<Uint8List?> getProfileImage(String imageId) async {
+    try {
+      final res = await storage.getFileView(
+        bucketId: AppwriteConstants.userBucketId,
+        fileId: imageId,
+      );
+      return res;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<void> deleteUserImage(String imageId) async {
+    try {
+      await storage.deleteFile(
+        bucketId: AppwriteConstants.userBucketId,
+        fileId: imageId,
+      );
+    } catch (e) {
+      // print(e.toString());
     }
   }
 
@@ -126,7 +157,6 @@ class AppwriteService extends GetxService {
       );
       return res;
     } catch (e) {
-      print('Error getting image: $e');
       return null;
     }
   }

@@ -7,7 +7,7 @@ class ButtonPrimary extends StatelessWidget {
       required this.text,
       required this.onPressed,
       this.backgroundColor,
-      this.rounded,
+      this.rounded,this.textColor = Colors.white,
       this.isActive = false});
 
   final void Function()? onPressed;
@@ -15,6 +15,7 @@ class ButtonPrimary extends StatelessWidget {
   final double? rounded;
   final String text;
   final bool isActive;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class ButtonPrimary extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 16.0,
           text: text,
-          color: Colors.white,
+          color: textColor,
         ),
       ),
     );
