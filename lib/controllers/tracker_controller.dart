@@ -38,17 +38,18 @@ class TrackerController extends GetxController {
   void countKalori(userId) async {
     try {
       isLoadingGetBMR.value = true;
-      final BMRModel response = await bmrService.getBmr(userId);
-      bmrTotal.value = response.total!;
+      final BMRModel? response = await bmrService.getBmr(userId);
+
+      bmrTotal.value = response!.total!.toDouble();
       bmrId.value = response.id;
 
       restKalori.value = bmrTotal.value - totalKaloriToday.value;
     } catch (e) {
       Logger().d(e);
-      Get.snackbar(
-        'Error',
-        "terjadi kesalahan $e",
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   "terjadi kesalahan $e",
+      // );
     } finally {
       isLoadingGetBMR.value = false;
     }

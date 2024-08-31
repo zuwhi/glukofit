@@ -80,7 +80,7 @@ class CardPantauKalori extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextPrimary(
-                text: "Target Maximal kalorimu :",
+                text: "kalori yang dibutuhkan :",
                 fontSize: 13,
                 color: Colors.grey.shade200,
                 fontWeight: FontWeight.w500,

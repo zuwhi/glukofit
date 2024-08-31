@@ -187,8 +187,8 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                               onPressed: () {
                                                 controller.deleteTracker(
                                                     trackFromEdit!.id);
-                                                Get.offAllNamed(
-                                                    AppRoutes.tracker);
+                                                controller.getListTracker();
+                                                Get.back();
                                               },
                                               isActive: true,
                                               backgroundColor: Colors.red,
@@ -225,7 +225,9 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
 
                               Logger().d(model.toJson());
                               controller.updateTracker(model);
-                              Get.offAllNamed(AppRoutes.tracker);
+                              controller.getListTracker();
+                              Get.back();
+                              // Get.offAllNamed(AppRoutes.tracker);
                             },
                             isActive: true,
                             backgroundColor: AppColors.primary,
@@ -247,6 +249,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                         );
 
                         controller.addTracker();
+                        controller.getListTracker();
 
                         if (isFromSearch) {
                           Get.offAllNamed(AppRoutes.tracker);
