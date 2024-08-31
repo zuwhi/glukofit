@@ -109,20 +109,7 @@ class ArtikelDetailView extends GetView<ArtikelController> {
         ),
       ),
       extendBody: true,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
-        onPressed: () {
-          Get.toNamed(AppRoutes.scanner);
-        },
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.circle,
-          size: 50,
-          color: Colors.white,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: const CustomBottomNavBar(),
+
     );
   }
 }
