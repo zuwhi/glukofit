@@ -2,8 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArtikelDetailView extends GetView<ArtikelController> {
   final ArtikelModel artikel;
@@ -14,14 +16,31 @@ class ArtikelDetailView extends GetView<ArtikelController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Artikel'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: Text(
+          'Detail Artikel',
+          style: GoogleFonts.dmSans(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        scrolledUnderElevation: 0.0,
+        backgroundColor: AppColors.primary,
         elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/icons/back.png',
+            width: 12,
+            height: 26,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,35 +49,66 @@ class ArtikelDetailView extends GetView<ArtikelController> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
-                  return Image.memory(
-                    snapshot.data!,
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
+                  return ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(18)),
+                    child: Image.memory(
+                      snapshot.data!,
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 }
                 return const SizedBox(
                   height: 200,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                      child:
+                          CircularProgressIndicator(color: AppColors.primary)),
                 );
               },
             ),
-            const SizedBox(height: 16),
-            Text(
-              artikel.judul,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Icon(
+                  Icons.access_time_outlined,
+                  size: 12,
+                  color: Color(0xFFA6A4A4),
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  artikel.tanggal,
+                  style: GoogleFonts.dmSans(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFA6A4A4)),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             Text(
-              'Kategori: ${artikel.kategori}',
+              artikel.judul,
+              style:
+                  GoogleFonts.dmSans(fontSize: 18, fontWeight: FontWeight.w700),
             ),
-            Text(
-              artikel.tanggal,
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: IconButton(
+            //     icon: const Icon(
+            //       Icons.comment,
+            //       size: 30,
+            //       color: Color(0xFFA6A4A4),
+            //     ),
+            //     onPressed: () {},
+            //   ),
+            // ),
             Text(
               artikel.deskripsi,
               textAlign: TextAlign.justify,
+              style:
+                  GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ],
         ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/constants/app_routes.dart';
+import 'package:glukofit/controllers/auth_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({
@@ -7,15 +11,25 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: const Column(
-            children: [],
-          ),
-        ),
-      ),
+    final AuthController authController = Get.find<AuthController>();
+
+    Future.delayed(const Duration(seconds: 2), () async {
+      await authController.checkLoginStatus();
+      if (authController.isLoggedIn.value) {
+        Get.offAllNamed(AppRoutes.dashboard);
+      } else {
+        Get.offAllNamed(AppRoutes.welcome);
+      }
+    });
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: AppColors.primary,
+          body: Center(
+            child: Image.asset(
+              "assets/icons/sugaria_splash.png",
+              height: 130,
+            ),
+          )),
     );
   }
 }

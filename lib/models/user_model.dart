@@ -9,6 +9,10 @@ class UserModel {
   final int umur;
   final int tinggi;
   final int berat;
+  final String imageId;
+  final String role;
+  final String phone;
+
   UserModel({
     required this.id,
     required this.nama,
@@ -17,6 +21,9 @@ class UserModel {
     required this.umur,
     required this.tinggi,
     required this.berat,
+    required this.imageId,
+    required this.role,
+    required this.phone,
   });
 
   UserModel copyWith({
@@ -27,6 +34,9 @@ class UserModel {
     int? umur,
     int? tinggi,
     int? berat,
+    String? imageId,
+    String? role,
+    String? phone,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -36,6 +46,9 @@ class UserModel {
       umur: umur ?? this.umur,
       tinggi: tinggi ?? this.tinggi,
       berat: berat ?? this.berat,
+      imageId: imageId ?? this.imageId,
+      role: role ?? this.role,
+      phone: phone ?? this.phone,
     );
   }
 
@@ -47,6 +60,9 @@ class UserModel {
       'umur': umur,
       'tinggi': tinggi,
       'berat': berat,
+      'imageId': imageId,
+      'role': role,
+      'phone': phone,
     };
   }
 
@@ -59,6 +75,9 @@ class UserModel {
       umur: map['umur'] ?? 0,
       tinggi: map['tinggi'] ?? 0,
       berat: map['berat'] ?? 0,
+      imageId: map['imageId'] ?? '',
+      role: map['role'] ?? '',
+      phone: map['phone'] ?? '',
     );
   }
 
@@ -69,7 +88,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, nama: $nama, email: $email, status: $status, umur: $umur, tinggi: $tinggi, berat: $berat)';
+    return 'UserModel(id: $id, nama: $nama, email: $email, status: $status, umur: $umur, tinggi: $tinggi, berat: $berat, imageId: $imageId, role: $role, phone: $phone)';
   }
 
   @override
@@ -82,7 +101,10 @@ class UserModel {
         other.status == status &&
         other.umur == umur &&
         other.tinggi == tinggi &&
-        other.berat == berat;
+        other.berat == berat &&
+        other.imageId == imageId &&
+        other.role == role &&
+        other.phone == phone;
   }
 
   @override
@@ -93,6 +115,9 @@ class UserModel {
         status.hashCode ^
         umur.hashCode ^
         tinggi.hashCode ^
-        berat.hashCode;
+        berat.hashCode ^
+        imageId.hashCode ^
+        role.hashCode ^
+        phone.hashCode;
   }
 }
