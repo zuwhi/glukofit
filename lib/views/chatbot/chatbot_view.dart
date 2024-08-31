@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:glukofit/constants/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatBotGeminiPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
     id: "1",
     firstName: "Sugabot",
     profileImage:
-        "https://ibb.co.com/sjCLmZY",
+        "https://cdn.dribbble.com/users/344048/screenshots/4134234/bot_icon_dribbble_1x.jpg",
   );
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,12 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 48, 94, 214),
+        backgroundColor: AppColors.primary,
         title: Row(
           children: [
             Image.asset(
@@ -47,10 +48,7 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
             ),
             const Text(
               "   Sugabot",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ],
         ),
@@ -76,7 +74,6 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
       currentUser: currentUser,
       onSend: _sendMessage,
       messages: messages,
-      
     );
   }
 

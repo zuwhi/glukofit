@@ -4,7 +4,7 @@ import 'dart:convert';
 class BMRModel {
   final String id;
   final String? userId;
-  final double? total;
+  final num? total;
   BMRModel({
     required this.id,
     this.userId,
@@ -15,7 +15,7 @@ class BMRModel {
   BMRModel copyWith({
     String? id,
     String? userId,
-    double? total,
+    num? total,
   }) {
     return BMRModel(
       id: id ?? this.id,
@@ -36,7 +36,7 @@ class BMRModel {
     return BMRModel(
       id: map['\$id'] as String,
       userId: map['userId'] != null ? map['userId'] as String : null,
-      total: map['total'] != null ? map['total'] as double : null,
+      total: map['total'] != null ? map['total'] as num : null,
     );
   }
 

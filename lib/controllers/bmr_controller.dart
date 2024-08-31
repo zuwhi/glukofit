@@ -7,9 +7,9 @@ import 'package:logger/logger.dart';
 enum Gender { empty, male, female }
 
 class BmrController extends GetxController {
-  RxInt age = 0.obs;
-  RxInt height = 150.obs;
-  RxInt weight = 0.obs;
+  RxString age = ''.obs;
+  RxString height = ''.obs;
+  RxString weight = ''.obs;
 
   RxDouble bmr = 0.0.obs;
   RxDouble tdee = 0.0.obs;
@@ -26,10 +26,10 @@ class BmrController extends GetxController {
       return;
     } else if (gender.value == Gender.male) {
       bmr.value =
-          (10 * weight.value) + (6.25 * height.value) - (5 * age.value) + 5;
+          (10 * double.parse(weight.value)) + (6.25 * double.parse(height.value)) - (5 * double.parse(age.value)) + 5;
     } else if (gender.value == Gender.female) {
       bmr.value =
-          (10 * weight.value) + (6.25 * height.value) - (5 * age.value) - 161;
+          (10 * double.parse(weight.value)) + (6.25 * double.parse(height.value)) - (5 * double.parse(age.value)) - 161;
     }
 
     kaloriTotal.value = bmr.value * tdee.value;
@@ -50,6 +50,7 @@ class BmrController extends GetxController {
       isLoading.value = false;
     }
   }
+
   void updateBmr(BMRModel model) async {
     try {
       isLoading.value = true;

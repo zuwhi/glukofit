@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:glukofit/constants/app_colors.dart';
-import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/tracker_controller.dart';
-import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class CardPantauKalori extends StatelessWidget {
-  const CardPantauKalori({
+class CardPantauKaloriOnHome extends StatelessWidget {
+  const CardPantauKaloriOnHome({
     super.key,
     required this.controller,
   });
@@ -27,7 +24,7 @@ class CardPantauKalori extends StatelessWidget {
                 controller.bmrTotal.value == 0
                     ? Container()
                     : SizedBox(
-                        height: 120,
+                        height: 90,
                         child: SfRadialGauge(axes: <RadialAxis>[
                           RadialAxis(
                               minimum: 0,
@@ -92,22 +89,33 @@ class CardPantauKalori extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               const SizedBox(
-                height: 18.0,
+                height: 10.0,
               ),
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ButtonPrimary(
-                      text: "Ubah",
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.bmr,
-                            arguments: {"bmrId": controller.bmrId.value});
-                      },
-                      isActive: true,
-                      textColor: AppColors.primary,
-                      backgroundColor: Colors.white),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     Get.toNamed(AppRoutes.bmr,
+              //         arguments: {"bmrId": controller.bmrId.value});
+              //   },
+              //   child: Container(
+              //     width: 140,
+              //     height: 40,
+              //     decoration: BoxDecoration(
+              //       color: Colors.white, // Background color putih
+              //       borderRadius: BorderRadius.circular(7), // Radius 15
+              //     ),
+              //     child: const Center(
+              //       child: Text(
+              //         'Ubah',
+              //         style: TextStyle(
+              //           color: AppColors
+              //               .primary, // Warna teks bisa diubah sesuai keinginan
+              //           fontSize: 16, // Ukuran teks
+              //           fontWeight: FontWeight.bold, // Ketebalan teks
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),

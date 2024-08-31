@@ -11,6 +11,7 @@ import 'package:glukofit/views/diagnosa/widgets/custom_choice_chip_widget.dart';
 import 'package:glukofit/views/diagnosa/widgets/custom_form_diagnose_widget.dart';
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
+import 'package:logger/logger.dart';
 
 class BmrView extends StatelessWidget {
   const BmrView({super.key});
@@ -22,18 +23,25 @@ class BmrView extends StatelessWidget {
 
     final AuthController authController = Get.find();
     final BmrController controller = Get.put(BmrController());
-    final weightController = TextEditingController(
-        text: authController.userData.value['berat'] != null
-            ? authController.userData.value['berat'].toString()
-            : controller.weight.value.toString());
-    final heightController = TextEditingController(
-        text: authController.userData.value['tinggi'] != null
-            ? authController.userData.value['tinggi'].toString()
-            : controller.height.value.toString());
-    final ageController = TextEditingController(
-        text: authController.userData.value['umur'] != null
-            ? authController.userData.value['umur'].toString()
-            : controller.age.value.toString());
+    if (authController.userData.value['berat'] != null) {
+      Logger().d(authController.userData.value['berat']);
+      controller.weight.value =
+          authController.userData.value['berat'].toString();
+    }
+    if (authController.userData.value['tinggi'] != null) {
+      controller.height.value =
+          authController.userData.value['tinggi'].toString();
+    }
+    if (authController.userData.value['umur'] != null) {
+      controller.age.value = authController.userData.value['umur'].toString();
+    }
+
+    final ageController = TextEditingController(text: controller.age.value);
+    final weightController =
+        TextEditingController(text: controller.weight.value);
+    final heightController =
+        TextEditingController(text: controller.height.value);
+
     final List<String> listOption = [
       'Suka Rebahan',
       'Aktivitas ringan, olahraga 1-2 kali/minggu',
@@ -44,7 +52,7 @@ class BmrView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BMR"),
+        title: const Text("Hitung Kalorimu"),
         centerTitle: true,
         actions: const [],
       ),
@@ -63,32 +71,7 @@ class BmrView extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               Get.dialog(
-                                AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  insetPadding: const EdgeInsets.all(13),
-                                  title: TextPrimary(
-                                    text: "Apa Itu BMR ?",
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey[800],
-                                  ),
-                                  content: TextPrimary(
-                                    textAlign: TextAlign.justify,
-                                    text:
-                                        '''BMR (Basal Metabolic Rate) adalah jumlah energi yang dibutuhkan tubuh untuk menjalankan fungsi dasar seperti bernapas dan memompa darah saat tubuh sedang beristirahat. Memahami BMR penting dalam pencegahan diabetes karena membantu dalam mengatur asupan kalori harian yang tepat. Dengan menjaga kalori yang dikonsumsi sesuai dengan BMR, seseorang dapat menghindari kelebihan berat badan, yang merupakan salah satu faktor risiko utama untuk diabetes tipe 2. Mengatur asupan kalori dan menjaga berat badan ideal dapat membantu mencegah resistensi insulin dan menjaga kadar gula darah tetap normal, yang merupakan langkah penting dalam mencegah diabetes.
-        ''',
-                                    fontSize: 15.0,
-                                    color: Colors.grey[600],
-                                  ),
-                                  // actions: [
-                                  //   TextButton(
-                                  //     child: const Text("tutup"),
-                                  //     onPressed: () {
-                                  //       Get.back();
-                                  //     },
-                                  //   ),
-                                  // ],
-                                ),
+                                const DialogBMR(),
                               );
                             },
                             child: Row(
@@ -103,7 +86,7 @@ class BmrView extends StatelessWidget {
                                     width: 5.0,
                                   ),
                                   TextPrimary(
-                                    text: "Apa Itu BMR ?",
+                                    text: "Apa Itu BMR & TDEE ?",
                                     fontSize: 16.0,
                                     color: Colors.blue[900],
                                   ),
@@ -161,7 +144,7 @@ class BmrView extends StatelessWidget {
                         controller: ageController,
                         hintText: "Masukkan Umur",
                         onChanged: (value) {
-                          controller.age.value = int.parse(value);
+                          controller.age.value = value;
                         },
                       ),
                       const SizedBox(
@@ -181,11 +164,11 @@ class BmrView extends StatelessWidget {
                                 controller: weightController,
                                 hintText: "Berat",
                                 suffixIcon: TextPrimary(
-                                  text: "kg  ",
+                                  text: "berat (kg)  ",
                                   color: Colors.grey[600],
                                 ),
                                 onChanged: (value) {
-                                  controller.weight.value = int.parse(value);
+                                  controller.weight.value = value;
                                 },
                               ),
                             ),
@@ -198,12 +181,11 @@ class BmrView extends StatelessWidget {
                                 controller: heightController,
                                 hintText: "Tinggi",
                                 suffixIcon: TextPrimary(
-                                  text: "cm  ",
+                                  text: "tinggi (cm)  ",
                                   color: Colors.grey[600],
                                 ),
                                 onChanged: (value) {
-                                  controller.height.value = int.parse(value);
-                                  // controller.updateHeight(value);
+                                  controller.height.value = value;
                                 },
                               ),
                             ),
@@ -293,8 +275,7 @@ class BmrView extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: Column(
-                                    mainAxisSize: MainAxisSize
-                                        .min, // Untuk memastikan dialog sesuai dengan konten
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       const SizedBox(
                                         height: 10.0,
@@ -308,7 +289,7 @@ class BmrView extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 16),
                                       Text(
-                                        "${controller.kaloriTotal.value.toInt()} adalah jumlah kalori maximal yang kamu butuhkan saat ini. ingin menyimpannya sebagai pengingat ?",
+                                        "${controller.kaloriTotal.value.toInt()} adalah jumlah rata-rata kalori  yang kamu butuhkan saat ini. ingin menyimpannya sebagai pengingat ?",
                                       ),
                                       const SizedBox(height: 24),
                                       Row(
@@ -358,12 +339,11 @@ class BmrView extends StatelessWidget {
                                 ),
                               ));
                             },
-                            // isActive: int.parse(weightController.text) != 0 &&
-                            //     int.parse(heightController.text) != 0 &&
-                            //     int.parse(ageController.text) != 0 &&
-                            //     controller.option.value != null &&
-                            //     controller.gender.value != Gender.empty,
-                            isActive: true,
+                            isActive: controller.weight.value != '' &&
+                                controller.height.value != '' &&
+                                controller.age.value != '' &&
+                                controller.option.value != null &&
+                                controller.gender.value != Gender.empty,
                             backgroundColor: AppColors.orange,
                           )
                         ],
@@ -373,6 +353,43 @@ class BmrView extends StatelessWidget {
                 ),
               ),
       ),
+    );
+  }
+}
+
+class DialogBMR extends StatelessWidget {
+  const DialogBMR({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      insetPadding: const EdgeInsets.all(13),
+      title: TextPrimary(
+        text: "Apa Itu BMR dan TDEE?",
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey[800],
+      ),
+      content: TextPrimary(
+        textAlign: TextAlign.justify,
+        text:
+            '''Basal Metabolic Rate (BMR) adalah jumlah energi yang tubuhmu butuhkan untuk menjalankan fungsi dasar seperti bernapas, menjaga suhu tubuh, dan mencerna makanan saat kamu dalam keadaan istirahat. 
+Total Daily Energy Expenditure (TDEE) adalah jumlah total kalori yang dibakar tubuh Anda dalam satu hari, termasuk kalori yang dibutuhkan untuk fungsi dasar tubuh (BMR) dan kalori yang digunakan untuk aktivitas fisik seperti bekerja, berolahraga, dan aktivitas sehari-hari lainnya. TDEE digunakan untuk menentukan berapa banyak kalori yang perlu Anda konsumsi setiap hari untuk mencapai tujuan berat badan Anda. Jika Anda ingin mempertahankan berat badan, Anda harus mengonsumsi kalori sebanyak TDEE Anda. Jika Anda ingin menurunkan berat badan, Anda harus mengonsumsi sedikit lebih sedikit dari TDEE Anda, dan jika Anda ingin menambah berat badan, Anda perlu mengonsumsi lebih banyak kalori daripada TDEE Anda. Perhitungan ini membantu dalam merencanakan pola makan yang sesuai dengan kebutuhan energi dan tujuan kesehatan Anda..
+            ''',
+        fontSize: 15.0,
+        color: Colors.grey[600],
+      ),
+      // actions: [
+      //   TextButton(
+      //     child: const Text("tutup"),
+      //     onPressed: () {
+      //       Get.back();
+      //     },
+      //   ),
+      // ],
     );
   }
 }

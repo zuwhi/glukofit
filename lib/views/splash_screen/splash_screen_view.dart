@@ -21,15 +21,13 @@ class SplashScreen extends StatelessWidget {
         Get.offAllNamed(AppRoutes.welcome);
       }
     });
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: AppColors.primary,
-          body: Center(
-            child: Image.asset(
-              "assets/icons/sugaria_splash.png",
-              height: 130,
-            ),
-          )),
-    );
+    return Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Center(
+          child: Image.asset(
+            "assets/icons/sugaria_splash.png",
+            height: 130,
+          ),
+        ));
   }
 }

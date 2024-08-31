@@ -41,7 +41,7 @@ class AppwriteBmrService {
     }
   }
 
-  Future<BMRModel> getBmr(String userId) async {
+  Future<BMRModel?> getBmr(String userId) async {
     try {
       final response = await databases.listDocuments(
           databaseId: AppwriteConstants.databaseId,
@@ -49,11 +49,15 @@ class AppwriteBmrService {
           queries: [
             Query.equal('userId', [userId]),
           ]);
+      Logger().d(response.documents[0].data.toString());
 
       return BMRModel.fromMap(response.documents[0].data);
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
-      throw Exception(e.message);
+      Logger().d("cek error : ${e.message}");
+      return null;
+    } catch (e) {
+      Logger().d("cek error : $e");
+      return null;
     }
   }
 }

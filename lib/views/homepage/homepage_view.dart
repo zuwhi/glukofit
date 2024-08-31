@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
+import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
+import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:glukofit/controllers/tracker_controller.dart';
 import 'package:glukofit/models/artikel_model.dart';
+import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 import 'package:glukofit/views/artikel/widgets/card.dart';
 import 'package:glukofit/views/global_widgets/buttomnavbar.dart';
-import 'package:get/get.dart';
-import 'package:glukofit/constants/app_routes.dart';
-import 'package:glukofit/constants/app_colors.dart';
-import 'package:glukofit/views/artikel/artikel_detail_view.dart';
+import 'package:glukofit/views/homepage/widgets/card_pantau_kalori_on_home.dart';
+import 'package:intl/intl.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -23,7 +26,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final artikelController = Get.find<ArtikelController>();
+    final TrackerController controller = Get.put(TrackerController());
+    final AuthController authController = Get.find();
+
+    controller.countKalori(authController.userData.value['\$id']);
+    controller.userId.value = authController.userData.value["\$id"];
+    controller.pickedTime.value =
+        DateFormat('yyyy-MM-dd').format(DateTime.now());
+    controller.getListTracker();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -32,7 +43,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             Column(
               children: [
                 const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       child: Image(
@@ -41,29 +52,31 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         height: 50,
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 48, 94, 214),
-                      child: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                      ),
-                    )
+                    // CircleAvatar(
+                    //   backgroundColor: AppColors.primary,
+                    //   child: Icon(
+                    //     Icons.notifications,
+                    //     color: Colors.white,
+                    //   ),
+                    // )
                   ],
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      'Welcome User',
+                      'List fitur',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Wrap(
+                  spacing: 23.0,
+                  runSpacing: 5.0,
+                  alignment: WrapAlignment.start,
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -71,10 +84,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       },
                       child: const SizedBox(
                         height: 100,
+                        width: 70,
                         child: Column(
                           children: [
                             CircleAvatar(
-                              backgroundColor: Color.fromARGB(255, 48, 94, 214),
+                              backgroundColor: AppColors.primary,
                               radius: 25,
                               child: Image(
                                 image: AssetImage('assets/images/gula.png'),
@@ -83,7 +97,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             ),
                             Text(
-                              'Pantau\nGula',
+                              'Pantau\nKalori',
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -96,11 +110,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       },
                       child: const SizedBox(
                         height: 100,
+                        width: 70,
                         child: Column(
                           children: [
                             CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 48, 94, 214),
+                                backgroundColor: AppColors.primary,
                                 radius: 25,
                                 child: Image(
                                     image: AssetImage(
@@ -121,11 +135,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       },
                       child: const SizedBox(
                         height: 100,
+                        width: 70,
                         child: Column(
                           children: [
                             CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 48, 94, 214),
+                                backgroundColor: AppColors.primary,
                                 radius: 25,
                                 child: Image(
                                     image:
@@ -145,11 +159,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       },
                       child: const SizedBox(
                         height: 100,
+                        width: 70,
                         child: Column(
                           children: [
                             CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 48, 94, 214),
+                                backgroundColor: AppColors.primary,
                                 radius: 25,
                                 child: Image(
                                     image: AssetImage('assets/images/ai.png'),
@@ -162,88 +176,93 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         ),
                       ),
                     ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.searchNutrisi);
+                      },
+                      child: const SizedBox(
+                        height: 100,
+                        width: 70,
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: AppColors.primary,
+                              radius: 25,
+                              child: Image(
+                                image: AssetImage(
+                                    'assets/images/searchnutrisi.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                            Text(
+                              'Cari \nNutrisi',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.kalkulatorBMI);
+                      },
+                      child: const SizedBox(
+                        height: 100,
+                        width: 70,
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: AppColors.primary,
+                              radius: 25,
+                              child: Image(
+                                image: AssetImage(
+                                    'assets/images/kalkulatorideal.png'),
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                            Text(
+                              'Kalkulator\nIdeal',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.searchNutrisi);
-                        },
-                        child: const SizedBox(
-                          height: 100,
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 48, 94, 214),
-                                radius: 25,
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/searchnutrisi.png'),
-                                  width: 30,
-                                  height: 30,
-                                ),
-                              ),
-                              Text(
-                                'Cari \nNutrisi',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 45,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.kalkulatorBMI);
-                        },
-                        child: const SizedBox(
-                          height: 100,
-                          child: Column(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 48, 94, 214),
-                                radius: 25,
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/kalkulatorideal.png'),
-                                  width: 30,
-                                  height: 30,
-                                ),
-                              ),
-                              Text(
-                                'Kalkulator\nIdeal',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      'Daily Report',
+                      'Kalorimu Hari ini ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 const SizedBox(
                   height: 11,
                 ),
-                Container(
-                  color: const Color.fromARGB(255, 48, 94, 214),
-                  height: 130,
+                Obx(
+                  () => Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        color: AppColors.primary,
+                        border: Border.all(
+                          color: AppColors.primary,
+                        )),
+                    height: 140,
+                    child: controller.isLoadingGetBMR.value
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : CardPantauKaloriOnHome(controller: controller),
+                  ),
                 ),
                 const SizedBox(
                   height: 22,
@@ -251,14 +270,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Article For You',
+                      'Artikel untukmu',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 300,
+                SizedBox(
+                  height: 350,
                   child: Obx(() {
                     final controller = Get.find<ArtikelController>();
 
@@ -267,6 +286,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     }
 
                     return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -284,7 +304,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       },
                     );
                   }),
-                )
+                ),
               ],
             ),
           ],
@@ -292,7 +312,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
       extendBody: true,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
+        backgroundColor: AppColors.primary,
         onPressed: () {
           Get.toNamed(AppRoutes.scanner);
         },
@@ -330,7 +350,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             child: Container(
               padding: const EdgeInsets.all(10.0),
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 48, 94, 214),
+                color: AppColors.primary,
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(10)),
               ),
