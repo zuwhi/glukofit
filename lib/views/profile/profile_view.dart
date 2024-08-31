@@ -2,10 +2,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
+import 'package:glukofit/views/global_widgets/button_primary.dart';
+import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileView extends StatefulWidget {
@@ -109,7 +111,66 @@ class _ProfileViewState extends State<ProfileView> {
                 size: 24,
               ),
               onPressed: () {
-                controller.logout();
+                Get.dialog(Dialog(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize
+                          .min, 
+                      children: [
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        const Text(
+                          "Konfirmasi",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          "Apakah Anda yakin ingin keluar dari akun ini?",
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: TextPrimary(
+                                  text: "Batal",
+                                  color: AppColors.primary,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: ButtonPrimary(
+                                text: "Keluar",
+                                onPressed: () {
+                                  controller.logout();
+                                },
+                                isActive: true,
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ));
               },
             ),
           ]),

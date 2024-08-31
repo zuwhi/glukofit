@@ -22,18 +22,23 @@ class BmrView extends StatelessWidget {
 
     final AuthController authController = Get.find();
     final BmrController controller = Get.put(BmrController());
-    final weightController = TextEditingController(
-        text: authController.userData.value['berat'] != null
-            ? authController.userData.value['berat'].toString()
-            : controller.weight.value.toString());
-    final heightController = TextEditingController(
-        text: authController.userData.value['tinggi'] != null
-            ? authController.userData.value['tinggi'].toString()
-            : controller.height.value.toString());
-    final ageController = TextEditingController(
-        text: authController.userData.value['umur'] != null
-            ? authController.userData.value['umur'].toString()
-            : controller.age.value.toString());
+    if (authController.userData.value['berat'] != null) {
+      controller.weight.value = authController.userData.value['berat'];
+    }
+    if (authController.userData.value['tinggi'] != null) {
+      controller.height.value = authController.userData.value['tinggi'];
+    }
+    if (authController.userData.value['umur'] != null) {
+      controller.age.value = authController.userData.value['umur'];
+    }
+
+    final ageController =
+        TextEditingController(text: controller.age.value.toString());
+    final weightController =
+        TextEditingController(text: controller.weight.value.toString());
+    final heightController =
+        TextEditingController(text: controller.height.value.toString());
+
     final List<String> listOption = [
       'Suka Rebahan',
       'Aktivitas ringan, olahraga 1-2 kali/minggu',
@@ -75,7 +80,7 @@ class BmrView extends StatelessWidget {
                                   content: TextPrimary(
                                     textAlign: TextAlign.justify,
                                     text:
-                                        '''BMR (Basal Metabolic Rate) adalah jumlah energi yang dibutuhkan tubuh untuk menjalankan fungsi dasar seperti bernapas dan memompa darah saat tubuh sedang beristirahat. Memahami BMR penting dalam pencegahan diabetes karena membantu dalam mengatur asupan kalori harian yang tepat. Dengan menjaga kalori yang dikonsumsi sesuai dengan BMR, seseorang dapat menghindari kelebihan berat badan, yang merupakan salah satu faktor risiko utama untuk diabetes tipe 2. Mengatur asupan kalori dan menjaga berat badan ideal dapat membantu mencegah resistensi insulin dan menjaga kadar gula darah tetap normal, yang merupakan langkah penting dalam mencegah diabetes.
+                                        '''Basal metabolic rate (BMR) adalah kalori yang tubuh Anda perlukan untuk melakukan aktivitas dasar tubuh seperti bernapas dan memompa darah saat tubuh sedang beristirahat. Memahami BMR penting dalam pencegahan diabetes karena membantu dalam mengatur asupan kalori harian yang tepat. Dengan menjaga kalori yang dikonsumsi sesuai dengan BMR, seseorang dapat menghindari kelebihan berat badan, yang merupakan salah satu faktor risiko utama untuk diabetes tipe 2. Mengatur asupan kalori dan menjaga berat badan ideal dapat membantu mencegah resistensi insulin dan menjaga kadar gula darah tetap normal, yang merupakan langkah penting dalam mencegah diabetes.
         ''',
                                     fontSize: 15.0,
                                     color: Colors.grey[600],
@@ -203,7 +208,6 @@ class BmrView extends StatelessWidget {
                                 ),
                                 onChanged: (value) {
                                   controller.height.value = int.parse(value);
-                                  // controller.updateHeight(value);
                                 },
                               ),
                             ),
@@ -358,12 +362,11 @@ class BmrView extends StatelessWidget {
                                 ),
                               ));
                             },
-                            // isActive: int.parse(weightController.text) != 0 &&
-                            //     int.parse(heightController.text) != 0 &&
-                            //     int.parse(ageController.text) != 0 &&
-                            //     controller.option.value != null &&
-                            //     controller.gender.value != Gender.empty,
-                            isActive: true,
+                            isActive: controller.weight.value != 0 &&
+                                controller.height.value != 0 &&
+                                controller.age.value != 0 &&
+                                controller.option.value != null &&
+                                controller.gender.value != Gender.empty,
                             backgroundColor: AppColors.orange,
                           )
                         ],
