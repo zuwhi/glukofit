@@ -106,6 +106,7 @@ class ArtikelDetailView extends GetView<ArtikelController> {
         ),
       ),
       extendBody: true,
+
     );
   }
 }
