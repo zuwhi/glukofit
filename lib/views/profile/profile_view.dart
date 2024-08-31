@@ -103,7 +103,11 @@ class _ProfileViewState extends State<ProfileView> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout, color: Colors.red),
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+                size: 24,
+              ),
               onPressed: () {
                 controller.logout();
               },
@@ -224,41 +228,46 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              await controller.updateUser(
-                                nama: nameController.text,
-                                email: emailController.text,
-                                phone: phoneController.text,
-                                status: selectedStatus,
-                                umur: int.parse(ageController.text),
-                                tinggi: int.parse(heightController.text),
-                                berat: int.parse(weightController.text),
-                                newImage: image,
-                                role: userData['role'],
-                              );
-                            } catch (e) {
-                              Get.snackbar(
-                                  'Error', 'Failed to update profile: $e');
-                            }
-                          }
-                        },
+                        onPressed: controller.isLoading.value
+                            ? null // Disable button when loading
+                            : () async {
+                                if (_formKey.currentState!.validate()) {
+                                  try {
+                                    await controller.updateUser(
+                                      nama: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                      status: selectedStatus,
+                                      umur: int.parse(ageController.text),
+                                      tinggi: int.parse(heightController.text),
+                                      berat: int.parse(weightController.text),
+                                      newImage: image,
+                                      role: controller.userData.value['role'],
+                                    );
+                                  } catch (e) {
+                                    Get.snackbar('Error',
+                                        'Failed to update profile: $e');
+                                  }
+                                }
+                              },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 50),
                           backgroundColor: AppColors.orange,
                           shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                        ),
-                        child: Text(
-                          'Edit Profile',
-                          style: GoogleFonts.dmSans(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                         ),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
+                            : Text(
+                                'Edit Profile',
+                                style: GoogleFonts.dmSans(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                       const SizedBox(height: 24),
                     ],
