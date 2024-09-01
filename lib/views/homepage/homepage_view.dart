@@ -245,23 +245,28 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   height: 11,
                 ),
                 Obx(
-                  () => Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        color: AppColors.primary,
-                        border: Border.all(
+                  () => InkWell(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.tracker);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
                           color: AppColors.primary,
-                        )),
-                    height: 140,
-                    child: controller.isLoadingGetBMR.value
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
-                        : CardPantauKaloriOnHome(controller: controller),
+                          border: Border.all(
+                            color: AppColors.primary,
+                          )),
+                      height: 140,
+                      child: controller.isLoadingGetBMR.value
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : CardPantauKaloriOnHome(controller: controller),
+                    ),
                   ),
                 ),
                 const SizedBox(

@@ -11,7 +11,6 @@ import 'package:glukofit/views/diagnosa/widgets/custom_choice_chip_widget.dart';
 import 'package:glukofit/views/diagnosa/widgets/custom_form_diagnose_widget.dart';
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
-import 'package:logger/logger.dart';
 
 class QuestionOneSectionWidget extends StatelessWidget {
   const QuestionOneSectionWidget({super.key});
@@ -31,6 +30,8 @@ class QuestionOneSectionWidget extends StatelessWidget {
           authController.userData.value['tinggi'].toString();
     }
     if (authController.userData.value['umur'] != null) {
+      controller.updateDiagnosaModel(
+          0, [authController.userData.value['umur'].toString()]);
       controller.age.value = authController.userData.value['umur'].toString();
     }
 
@@ -144,7 +145,6 @@ class QuestionOneSectionWidget extends StatelessWidget {
             backgroundColor: AppColors.orange,
             isActive: controller.question1.value,
             onPressed: () {
-              Logger().d(controller.diagnosaModel.value.toJson());
               controller.updateCurrentIndex(2);
             },
             text: "Next",
