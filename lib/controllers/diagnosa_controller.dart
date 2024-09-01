@@ -20,6 +20,7 @@ class DiagnosaController extends GetxController {
       isLoading.value = true;
       Dio dio = Dio();
       String url = AppConstant.urlDiagnose;
+      Logger().d(diagnosaModel.value.toJson());
       final res =
           await dio.post('$url/predict', data: diagnosaModel.value.toJson());
       Logger().d(res.data["predictions"][0]);
@@ -116,7 +117,6 @@ class DiagnosaController extends GetxController {
   }
 
   void updateDiagnosaModel(int index, List<String> newData) {
-    print('newData: $newData');
     switch (index) {
       case 0:
         diagnosaModel.value.age = newData;

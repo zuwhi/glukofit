@@ -189,6 +189,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                                     trackFromEdit!.id);
                                                 controller.getListTracker();
                                                 Get.back();
+                                                Get.back();
                                               },
                                               isActive: true,
                                               backgroundColor: Colors.red,
