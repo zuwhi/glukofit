@@ -47,7 +47,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   children: [
                     SizedBox(
                       child: Image(
-                        image: AssetImage('assets/icons/sugaria_logo.png'),
+                        image: AssetImage('assets/icons/logo.png'),
                         width: 130,
                         height: 50,
                       ),
@@ -62,16 +62,50 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
-                const Align(
+                Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      'List fitur',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      'Selamat datang ${authController.userData.value['nama'] ?? ''}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          color: Colors.black87),
                     )),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
+                ),
+                Obx(
+                  () => InkWell(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.tracker);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          color: AppColors.primary,
+                          border: Border.all(
+                            color: AppColors.primary,
+                          )),
+                      height: 140,
+                      child: controller.isLoadingGetBMR.value
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : CardPantauKaloriOnHome(controller: controller),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const SizedBox(
+                  height: 8.0,
                 ),
                 Wrap(
                   spacing: 23.0,
@@ -234,43 +268,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                const Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      'Kalorimu Hari ini ',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                const SizedBox(
-                  height: 11,
-                ),
-                Obx(
-                  () => InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.tracker);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15)),
-                          color: AppColors.primary,
-                          border: Border.all(
-                            color: AppColors.primary,
-                          )),
-                      height: 140,
-                      child: controller.isLoadingGetBMR.value
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            )
-                          : CardPantauKaloriOnHome(controller: controller),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 22,
                 ),
                 const Align(
                     alignment: Alignment.centerLeft,

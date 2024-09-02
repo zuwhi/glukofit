@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
         backgroundColor: AppColors.primary,
         body: Center(
           child: Image.asset(
-            "assets/icons/sugaria_splash.png",
+            "assets/icons/glukofit_splash.png",
             height: 130,
           ),
         ));

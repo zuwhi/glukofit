@@ -44,8 +44,7 @@ class RegisterView extends GetView<AuthController> {
                   SizedBox(
                       height: 140,
                       width: 170,
-                      // child: Image.asset('assets/icons/logo.png')),
-                      child: Image.asset('assets/icons/sugaria_logo.png')),
+                      child: Image.asset('assets/icons/logo.png')),
                   const SizedBox(
                     height: 16,
                   ),

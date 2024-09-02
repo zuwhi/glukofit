@@ -8,12 +8,9 @@ import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/controllers/tracker_controller.dart';
 import 'package:glukofit/views/global_widgets/bottom_sheet_add_nutrition_widget.dart';
-import 'package:glukofit/views/global_widgets/button_primary.dart';
-import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:glukofit/views/tracker/widgets/card_pantau_kalori.dart';
 import 'package:glukofit/views/tracker/widgets/timeline_history_widget.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class TrackerView extends StatelessWidget {
   const TrackerView({super.key});
@@ -61,9 +58,14 @@ class TrackerView extends StatelessWidget {
                   Icons.arrow_back,
                   color: Colors.black,
                 ))),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+        body: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: () async {
+            // Tambahkan delay untuk simulasi proses refresh
+            await Future.delayed(const Duration(seconds: 1));
+            controller.getListTracker();
+          },
+          child: ListView(
             children: [
               Column(
                 children: [
@@ -86,7 +88,7 @@ class TrackerView extends StatelessWidget {
                       child: controller.isLoadingGetBMR.value
                           ? const Center(
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Colors.green,
                               ),
                             )
                           : CardPantauKalori(controller: controller),
@@ -134,4 +136,3 @@ class TrackerView extends StatelessWidget {
     );
   }
 }
-
