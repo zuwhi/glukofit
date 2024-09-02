@@ -348,7 +348,7 @@ class _ProfileViewState extends State<ProfileView> {
       }),
       extendBody: true,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 48, 94, 214),
+        backgroundColor: AppColors.primary,
         onPressed: () {
           Get.toNamed(AppRoutes.scanner);
         },

@@ -26,8 +26,7 @@ class WelcomeView extends StatelessWidget {
                   height: 40,
                 ),
                 Text(
-                  // 'Welcome to Glukofit',
-                  'Welcome to Sugaria',
+                  'Selamat datang di Glukofit',
                   style: GoogleFonts.dmSans(
                     fontSize: 25,
                     fontWeight: FontWeight.w700,
@@ -37,8 +36,7 @@ class WelcomeView extends StatelessWidget {
                   height: 14,
                 ),
                 Text(
-                  // 'Glukofit is an app for your\n health assistance',
-                  'Sugaria is an app for your\n health assistance',
+                  'Glukofit adalah aplikasi untuk \n membantumu mencegah diabetes',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.dmSans(
                     fontSize: 15,
@@ -72,7 +70,7 @@ class WelcomeView extends StatelessWidget {
                 ),
                 RichText(
                   text: TextSpan(
-                      text: 'Dont have an account? ',
+                      text: 'Belum punya akun? ',
                       style: GoogleFonts.dmSans(
                         fontSize: 16,
                         fontWeight: FontWeight.w300,

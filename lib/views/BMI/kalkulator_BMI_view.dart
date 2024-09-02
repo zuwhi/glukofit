@@ -28,7 +28,7 @@ class KalkulatorBmiView extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: TextPrimary(
-          text: 'Kalkulator BMI',
+          text: 'Kalkulator Ideal',
           color: Colors.white,
         ),
         centerTitle: true,
