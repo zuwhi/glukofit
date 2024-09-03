@@ -5,6 +5,7 @@ import 'package:glukofit/controllers/produk_controller.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:glukofit/views/produk/nutrisi_produk_view.dart';
 import 'package:glukofit/views/produk/widgets/card_point_nutrition.dart';
+import 'package:logger/logger.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class CardTopNutritionGlaceWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class CardTopNutritionGlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+  return Column(
       children: [
         Obx(
           () => controller.isLoadingOnTopNutritionView.value
@@ -80,8 +81,8 @@ class CardTopNutritionGlaceWidget extends StatelessWidget {
                   ? Container()
                   : KategoriGulaWidget(
                       jmlGula:
-                          controller.fatsecretTopNutrisiScrap.value!.sugars ==
-                                  null
+                          controller.fatsecretTopNutrisiScrap.value!.sugars !=
+                                  ""
                               ? double.parse(controller
                                   .fatsecretTopNutrisiScrap.value!.sugars!
                                   .replaceAll('g', '')
@@ -109,8 +110,8 @@ class CardTopNutritionGlaceWidget extends StatelessWidget {
                   markerPointers: [
                     LinearShapePointer(
                       value:
-                          controller.fatsecretTopNutrisiScrap.value!.sugars ==
-                                  null
+                          controller.fatsecretTopNutrisiScrap.value!.sugars !=
+                                  ""
                               ? double.parse(controller
                                   .fatsecretTopNutrisiScrap.value!.sugars!
                                   .replaceAll('g', '')

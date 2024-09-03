@@ -64,11 +64,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Align(
+                const Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      'Selamat datang ${authController.userData.value['nama'] ?? ''}',
-                      style: const TextStyle(
+                      'Kalorimu hari ini ',
+                      style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
                           color: Colors.black87),
@@ -104,8 +104,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 const SizedBox(
                   height: 15,
                 ),
+                const Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'List fitur',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          color: Colors.black87),
+                    )),
                 const SizedBox(
-                  height: 8.0,
+                  height: 10.0,
                 ),
                 Wrap(
                   spacing: 23.0,
