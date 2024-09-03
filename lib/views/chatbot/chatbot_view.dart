@@ -22,7 +22,7 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
   ChatUser currentUser = ChatUser(id: "0", firstName: "User");
   ChatUser geminiUser = ChatUser(
     id: "1",
-    firstName: "Sugabot",
+    firstName: "Glukobot",
     profileImage:
         "https://cdn.dribbble.com/users/344048/screenshots/4134234/bot_icon_dribbble_1x.jpg",
   );
@@ -47,7 +47,7 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
               height: 30, // Sesuaikan tinggi logo
             ),
             const Text(
-              "   Sugabot",
+              "   Glukobot",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ],

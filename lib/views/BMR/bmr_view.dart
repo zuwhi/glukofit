@@ -313,7 +313,7 @@ class BmrView extends StatelessWidget {
                                           SizedBox(
                                             width: 100,
                                             child: ButtonPrimary(
-                                              text: "Iya",
+                                              text: "Simpan",
                                               onPressed: () {
                                                 final BMRModel model = BMRModel(
                                                     id: bmrId,
