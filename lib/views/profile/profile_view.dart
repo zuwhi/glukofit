@@ -333,7 +333,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 35),
                     ],
                   ),
                 ),
@@ -347,16 +347,19 @@ class _ProfileViewState extends State<ProfileView> {
         }
       }),
       extendBody: true,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () {
-          Get.toNamed(AppRoutes.scanner);
-        },
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.circle,
-          size: 50,
-          color: Colors.white,
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+        child: FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          onPressed: () {
+            Get.toNamed(AppRoutes.scanner);
+          },
+          shape: const CircleBorder(),
+          child: const Icon(
+            Icons.circle,
+            size: 50,
+            color: Colors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
