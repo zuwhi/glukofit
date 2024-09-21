@@ -5,6 +5,7 @@ import 'package:appwrite/models.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/constants/appwrite.dart';
+import 'package:glukofit/models/artikel_model.dart';
 
 class AppwriteService extends GetxService {
   Client client = Client();
@@ -167,5 +168,67 @@ class AppwriteService extends GetxService {
       collectionId: AppwriteConstants.artikelCollectionId,
     );
     return documents.documents;
+  }
+
+  Future<void> addArtikel(ArtikelModel artikel) async {
+    try {
+      await databases.createDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.artikelCollectionId,
+        documentId: ID.unique(),
+        data: artikel.toMap(),
+      );
+    } catch (e) {
+      throw Exception('Failed to add article');
+    }
+  }
+
+  Future<String> uploadArtikelImage(io.File file, String fileName) async {
+    try {
+      final result = await storage.createFile(
+        bucketId: AppwriteConstants.artikelBucketId,
+        fileId: ID.unique(),
+        file: InputFile.fromPath(path: file.path, filename: fileName),
+      );
+      return result.$id;
+    } on AppwriteException catch (e) {
+      throw Exception('Failed to upload file: ${e.message}');
+    }
+  }
+
+  Future<void> deleteArtikelImage(String imageId) async {
+    try {
+      await storage.deleteFile(
+        bucketId: AppwriteConstants.artikelBucketId,
+        fileId: imageId,
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> updateArtikel(ArtikelModel artikel) async {
+    try {
+      await databases.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.artikelCollectionId,
+        documentId: artikel.id,
+        data: artikel.toMap(),
+      );
+    } catch (e) {
+      throw Exception('Failed to update article: $e');
+    }
+  }
+
+  Future<void> deleteArtikel(String id) async {
+    try {
+      await databases.deleteDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.artikelCollectionId,
+        documentId: id,
+      );
+    } catch (e) {
+      throw Exception('Failed to delete article: $e');
+    }
   }
 }

@@ -5,6 +5,7 @@ class AppRoutes {
   static const login = '/login';
   static const welcome = '/welcome';
   static const artikel = '/artikel';
+  static const artikel_add = '/artikel_add';
   static const artikelDetail = '/artikelDetail';
   static const detailProduk = '/detailProduk';
   static const diagnosa = '/diagnosa';

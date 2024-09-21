@@ -197,10 +197,10 @@ packages:
     dependency: transitive
     description:
       name: dart_quill_delta
-      sha256: "6aa89f0903ca3e70f5ceeb1d75d722f6ca583e87a2a8893c7b9f42f7a947f6e5"
+      sha256: db4753e896f3bb5fc0708537e192d2a4abb1d72898bc5aa9d959aa869acbe993
       url: "https://pub.dev"
     source: hosted
-    version: "9.6.0"
+    version: "10.6.2"
   dash_chat_2:
     dependency: "direct main"
     description:
@@ -455,18 +455,18 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "7c37e0761e7101809af8e7994d6aef58519cb8035aa307be66867c710d64abf0"
+      sha256: e31a975372251154ea1007abab73a30a72ca68a28913155e18bd304645f173bc
       url: "https://pub.dev"
     source: hosted
-    version: "9.6.0"
+    version: "10.5.14"
   flutter_quill_delta_from_html:
     dependency: transitive
     description:
       name: flutter_quill_delta_from_html
-      sha256: "3cddb27325e005459fd2bbd6af4d813525d5b2bcb6e9828ab2b449f70eaf1147"
+      sha256: fd6e18af21d35277524302d95e24cd3ebedc59b976ddb4605aaf775d38892d40
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.12"
+    version: "1.4.1"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:

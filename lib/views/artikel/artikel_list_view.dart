@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/controllers/artikel_controller.dart';
+import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/models/artikel_model.dart';
 import 'package:glukofit/views/artikel/artikel_detail_view.dart';
 import 'package:glukofit/views/artikel/widgets/card.dart';
@@ -17,8 +19,41 @@ class ArtikelListView extends GetView<ArtikelController> {
     Get.to(() => ArtikelDetailView(artikel: artikel));
   }
 
+  void navigateToEditPage(ArtikelModel artikel) {
+    controller.loadArtikelForEdit(artikel);
+    Get.toNamed(AppRoutes.artikel_add);
+  }
+
+  void showDeleteConfirmation(BuildContext context, ArtikelModel artikel) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Hapus Artikel'),
+          content: const Text('Apakah Anda yakin ingin menghapus artikel ini?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Hapus'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                controller.deleteArtikel(artikel.id, artikel.imageId);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -124,14 +159,22 @@ class ArtikelListView extends GetView<ArtikelController> {
                     top: 8, left: 24, right: 24, bottom: 16),
                 sliver: SliverMasonryGrid.count(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 20,
                   itemBuilder: (context, index) {
                     final artikel = controller.filteredArtikels[index];
                     return ArtikelCard(
                       artikel: artikel,
                       onTap: () => navigateToDetailPage(artikel),
                       isLarge: index % 3 == 0,
+                      onEdit: (authController.userData.value['userLevel'] !=
+                              "admin")
+                          ? () => navigateToEditPage(artikel)
+                          : null,
+                      onDelete: (authController.userData.value['userLevel'] !=
+                              "admin")
+                          ? () => showDeleteConfirmation(context, artikel)
+                          : null,
                     );
                   },
                   childCount: controller.filteredArtikels.length,
@@ -139,22 +182,29 @@ class ArtikelListView extends GetView<ArtikelController> {
               );
             },
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 70),
+          )
         ],
       ),
       extendBody: true,
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: const Color.fromARGB(255, 48, 94, 214),
-      //   onPressed: () {
-      //     Get.toNamed(AppRoutes.scanner);
-      //   },
-      //   shape: const CircleBorder(),
-      //   child: const Icon(
-      //     Icons.circle,
-      //     size: 50,
-      //     color: Colors.white,
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton:
+          (authController.userData.value['userLevel'] != "admin")
+              ? FloatingActionButton(
+                  backgroundColor: AppColors.orange,
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.artikel_add);
+                  },
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.add,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                )
+              : Container(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
       // bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
@@ -236,7 +286,6 @@ class ArtikelListView extends GetView<ArtikelController> {
                     builder: (controller) {
                       final cachedImage =
                           controller.imageCache[artikel.imageId];
-
                       if (cachedImage != null) {
                         return ClipRRect(
                           borderRadius: const BorderRadius.only(

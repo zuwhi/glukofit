@@ -23,22 +23,24 @@ class AuthController extends GetxController {
     try {
       final account = await _appwriteService.account.get();
       isLoggedIn.value = true;
-      await getUserData(account.$id);
-    } catch (e) {
-      isLoggedIn.value = false;
-    }
-  }
-
-  Future<void> getUserData(String userId) async {
-    try {
-      final data = await _appwriteService.getUserDocument(userId);
+      final data = await getUserData(account.$id);
       userData.value = data;
       if (userData.value['imageId'] != null &&
           userData.value['imageId'] != '') {
         await getProfileImage(userData.value['imageId']);
       }
     } catch (e) {
+      isLoggedIn.value = false;
+    }
+  }
+
+  Future<Map<String, dynamic>> getUserData(String userId) async {
+    try {
+      final data = await _appwriteService.getUserDocument(userId);
+      return data;
+    } catch (e) {
       print('Error getting user data: $e');
+      return {};
     }
   }
 
@@ -81,7 +83,12 @@ class AuthController extends GetxController {
       final session = await _appwriteService.createSession(
           email: email, password: password);
       isLoggedIn.value = true;
-      await getUserData(session.userId);
+      final data = await getUserData(session.userId);
+      userData.value = data;
+      if (userData.value['imageId'] != null &&
+          userData.value['imageId'] != '') {
+        await getProfileImage(userData.value['imageId']);
+      }
       Get.snackbar('Success', 'Logged in successfully');
       Get.offAllNamed(AppRoutes.dashboard);
     } catch (e) {
@@ -168,6 +175,15 @@ class AuthController extends GetxController {
       profileImage.value = res;
     } catch (e) {
       profileImage.value = null;
+    }
+  }
+
+  Future<Uint8List?> getImage(String imageId) async {
+    try {
+      final res = await _appwriteService.getProfileImage(imageId);
+      return res;
+    } catch (e) {
+      return null;
     }
   }
 }

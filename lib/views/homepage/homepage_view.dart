@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/constants/app_routes.dart';
@@ -287,35 +288,31 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  height: 350,
-                  child: Obx(() {
-                    final controller = Get.find<ArtikelController>();
+                Obx(() {
+                  final controller = Get.find<ArtikelController>();
 
-                    if (controller.isLoading.value) {
-                      return _buildLoadingIndicator();
-                    }
+                  if (controller.isLoading.value) {
+                    return _buildLoadingIndicator();
+                  }
 
-                    return GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                  return SizedBox(
+                      height: 350,
+                      child: MasonryGridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 2,
-                        crossAxisSpacing: 15.0,
-                        mainAxisSpacing: 20.0,
-                      ),
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        final artikel = controller.filteredArtikels[index];
-                        return ArtikelCard(
-                          artikel: artikel,
-                          onTap: () => navigateToDetailPage(artikel),
-                          isLarge: index % 70 == 15,
-                        );
-                      },
-                    );
-                  }),
-                ),
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          final artikel = controller.filteredArtikels[index];
+                          return ArtikelCard(
+                            artikel: artikel,
+                            onTap: () => navigateToDetailPage(artikel),
+                            isLarge: false,
+                          );
+                        },
+                      ));
+                }),
               ],
             ),
           ],
@@ -381,22 +378,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   Widget _buildLoadingIndicator() {
-    return const SliverFillRemaining(
-      child: Center(
-        child: CircularProgressIndicator(
-          color: AppColors.primary,
-        ),
+    return const Center(
+      child: CircularProgressIndicator(
+        color: AppColors.primary,
       ),
     );
   }
 
   Widget _buildErrorIndicator(String errorMessage) {
-    return SliverFillRemaining(
-      child: Center(
-        child: Text(
-          errorMessage,
-          style: const TextStyle(color: Colors.red),
-        ),
+    return Center(
+      child: Text(
+        errorMessage,
+        style: const TextStyle(color: Colors.red),
       ),
     );
   }

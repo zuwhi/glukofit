@@ -179,6 +179,9 @@ class _ProfileViewState extends State<ProfileView> {
       body: Obx(() {
         if (controller.isLoggedIn.value) {
           final userData = controller.userData.value;
+          if (controller.userData.value.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return Form(
             key: _formKey,
             child: ListView(
@@ -293,7 +296,7 @@ class _ProfileViewState extends State<ProfileView> {
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: controller.isLoading.value
-                            ? null // Disable button when loading
+                            ? null
                             : () async {
                                 if (_formKey.currentState!.validate()) {
                                   try {
