@@ -6,6 +6,7 @@ import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/services/appwrite_service.dart';
 import 'package:glukofit/views/BMI/kalkulator_BMI_view.dart';
 import 'package:glukofit/views/BMR/bmr_view.dart';
+import 'package:glukofit/views/artikel/add_edit_artikel_view.dart';
 import 'package:glukofit/views/artikel/artikel_list_view.dart';
 import 'package:glukofit/views/chatbot/chatbot_view.dart';
 import 'package:glukofit/views/dashboard/dashboard_view.dart';
@@ -29,11 +30,11 @@ import 'package:glukofit/views/splash_screen/splash_screen_view.dart';
 import 'package:glukofit/views/tracker/tracker_view.dart';
 
 void main() async {
-    Gemini.init(apiKey: GEMINI_API_KEY);
+  Gemini.init(apiKey: GEMINI_API_KEY);
   WidgetsFlutterBinding.ensureInitialized();
   await Get.putAsync(() => AppwriteService().init());
-  Get.put(ArtikelController());
   Get.put(AuthController());
+  Get.put(ArtikelController());
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
@@ -118,7 +119,14 @@ void main() async {
           Get.put(ArtikelController());
         }),
       ),
-            GetPage(
+      GetPage(
+        name: AppRoutes.artikel_add,
+        page: () => const AddEditArtikelView(),
+        binding: BindingsBuilder(() {
+          Get.put(ArtikelController());
+        }),
+      ),
+      GetPage(
         name: AppRoutes.ai,
         page: () => const ChatBotGeminiPage(),
       ),
@@ -128,29 +136,5 @@ void main() async {
       ),
     ],
     initialRoute: AppRoutes.splashScreen,
-    initialBinding: BindingsBuilder(() {
-      Get.put(AuthController());
-      // Get.put(() => ArtikelController());
-
-    }),
-    
-    // home: const Root(),
   ));
 }
-
-// class Root extends StatelessWidget {
-//   const Root({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetX<AuthController>(
-//       builder: (controller) {
-//         if (controller.isLoggedIn.value) {
-//           return const DashboardView();
-//         } else {
-//           return const WelcomeView();
-//         }
-//       },
-//     );
-//   }
-// }

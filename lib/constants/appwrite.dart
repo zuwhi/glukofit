@@ -9,4 +9,5 @@ class AppwriteConstants {
   static const String riwayatCollectionId = '66cd282300340308e059';
   static const String kaloriCollectionId = 'kaloriId';
   static const String userBucketId = 'userBucketId';
+  static const String commentCollectionId = 'commentCollection';
 }

@@ -31,7 +31,7 @@ dependencies:
   step_progress_indicator: ^1.0.2
   syncfusion_flutter_gauges: ^26.2.8
   timeline_tile: ^2.0.0
-  flutter_quill: ^9.0.0
+  flutter_quill: ^10.5.14
   flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:

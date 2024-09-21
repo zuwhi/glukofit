@@ -28,7 +28,7 @@ class WelcomeView extends StatelessWidget {
                 Text(
                   'Selamat datang di Glukofit',
                   style: GoogleFonts.dmSans(
-                    fontSize: 25,
+                    fontSize: 23,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
