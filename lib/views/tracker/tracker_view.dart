@@ -61,8 +61,7 @@ class TrackerView extends StatelessWidget {
         body: RefreshIndicator(
           color: AppColors.primary,
           onRefresh: () async {
-            // Tambahkan delay untuk simulasi proses refresh
-            await Future.delayed(const Duration(seconds: 1));
+           
             controller.getListTracker();
           },
           child: ListView(

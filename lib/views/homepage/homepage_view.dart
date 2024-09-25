@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/constants/app_routes.dart';
@@ -63,7 +64,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 25,
                 ),
                 const Align(
                     alignment: Alignment.bottomLeft,
@@ -214,7 +215,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     width: 30,
                                     height: 30)),
                             Text(
-                              'AI',
+                              'Chatbot',
                             ),
                           ],
                         ),
@@ -319,16 +320,26 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
       ),
       extendBody: true,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () {
-          Get.toNamed(AppRoutes.scanner);
-        },
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.circle,
-          size: 50,
-          color: Colors.white,
+      floatingActionButton: SizedBox(
+        height: 68,
+        width: 68,
+        child: FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          onPressed: () {
+            Get.toNamed(AppRoutes.scanner);
+          },
+          shape: const CircleBorder(),
+          child: Container(
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+              ),
+              child: SvgPicture.asset(
+                'assets/svg/scan.svg',
+                height: 35,
+                width: 35,
+              )),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -27,6 +27,12 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
         text: trackFromEdit != null ? trackFromEdit!.keterangan : '');
     TextEditingController kaloriController = TextEditingController(
         text: trackFromEdit != null ? trackFromEdit!.kalori.toString() : '');
+    TextEditingController gulaController = TextEditingController(
+        text: trackFromEdit != null
+            ? trackFromEdit?.gula != null
+                ? trackFromEdit?.gula.toString()
+                : '0'
+            : '');
 
     final TrackerController controller = Get.put(TrackerController());
     if (isEdit && trackFromEdit != null) {
@@ -64,27 +70,11 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
               const SizedBox(
                 height: 20.0,
               ),
-              TextPrimary(
-                text: "Keterangan :",
-                fontSize: 15.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: CustomFormDiagnoseWidget(
-                  keyboardType: TextInputType.text,
-                  controller: judulController,
-                  hintText: "contoh : makan mendoan",
-                  onChanged: (value) {},
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextPrimary(
-                    text: "Jumlah kalori :",
+                    text: "Keterangan :",
                     fontSize: 15.0,
                   ),
                   isEdit
@@ -99,7 +89,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                               Icon(Icons.search,
                                   color: Colors.blue[900], size: 16),
                               TextPrimary(
-                                text: "Lakukan pencarian",
+                                text: "Pencarian",
                                 fontSize: 14.0,
                                 color: Colors.blue[900],
                               ),
@@ -108,18 +98,55 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                         ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: CustomFormDiagnoseWidget(
+                  keyboardType: TextInputType.text,
+                  controller: judulController,
+                  hintText: "contoh : makan mendoan",
+                  onChanged: (value) {},
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              TextPrimary(
+                text: "Jumlah kalori dan gula :",
+                fontSize: 15.0,
+              ),
               const SizedBox(
                 height: 5.0,
               ),
-              CustomFormDiagnoseWidget(
-                keyboardType: TextInputType.number,
-                controller: kaloriController,
-                hintText: "Kalori",
-                suffixIcon: TextPrimary(
-                  text: "kal  ",
-                  color: Colors.grey[600],
-                ),
-                onChanged: (value) {},
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomFormDiagnoseWidget(
+                      keyboardType: TextInputType.number,
+                      controller: kaloriController,
+                      hintText: "Kalori",
+                      suffixIcon: TextPrimary(
+                        text: "kal  ",
+                        color: Colors.grey[600],
+                      ),
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15.0,
+                  ),
+                  Expanded(
+                    child: CustomFormDiagnoseWidget(
+                      keyboardType: TextInputType.number,
+                      controller: gulaController,
+                      hintText: "Gula",
+                      suffixIcon: TextPrimary(
+                        text: "g  ",
+                        color: Colors.grey[600],
+                      ),
+                      onChanged: (value) {},
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 15.0,
@@ -217,6 +244,8 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                 id: trackFromEdit!.id,
                                 keterangan: judulController.text,
                                 kalori: int.parse(kaloriController.text),
+                                gula: double.parse(
+                                    gulaController.text.replaceAll(",", ".")),
                                 userId: authController.userData.value["\$id"],
                                 jam: controller.selectedTime.value
                                     .format(context),
@@ -243,6 +272,8 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                           id: '',
                           keterangan: judulController.text,
                           kalori: int.parse(kaloriController.text),
+                          gula: double.parse(
+                              gulaController.text.replaceAll(",", ".")),
                           userId: authController.userData.value["\$id"],
                           jam: controller.selectedTime.value.format(context),
                           tanggal: DateFormat('yyyy-MM-dd')

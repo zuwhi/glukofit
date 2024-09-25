@@ -18,6 +18,8 @@ class TrackerController extends GetxController {
   RxBool isLoadingGetBMR = false.obs;
   RxInt totalKalori = 0.obs;
   RxInt totalKaloriToday = 0.obs;
+
+  RxDouble totalGulaToday = 0.0.obs;
   RxDouble bmrTotal = 0.0.obs;
   RxString bmrId = ''.obs;
 
@@ -57,12 +59,14 @@ class TrackerController extends GetxController {
       listTracker.value = response;
       totalKalori.value = 0;
       totalKaloriToday.value = 0;
+      totalGulaToday.value = 0;
       for (TrackerModel tracker in listTracker.value) {
         // if (pickedTime.value ==
         //     DateFormat('yyyy-MM-dd').format(DateTime.now())) {
         //   totalKaloriToday.value += tracker.kalori ?? 0;
         //   restKalori.value = bmrTotal.value - totalKaloriToday.value;
         // }
+        totalGulaToday.value += tracker.gula ?? 0;
         totalKalori.value += tracker.kalori ?? 0;
         restKalori.value = bmrTotal.value - totalKalori.value;
       }
@@ -79,9 +83,11 @@ class TrackerController extends GetxController {
       listTracker.value = response;
       totalKalori.value = 0;
       totalKaloriToday.value = 0;
+      totalGulaToday.value = 0;
       for (TrackerModel tracker in listTracker.value) {
         print('ceeeeek');
         Logger().d(tracker.kalori);
+        totalGulaToday.value += tracker.gula ?? 0;
         totalKalori.value += tracker.kalori ?? 0;
         restKalori.value = bmrTotal.value - totalKalori.value;
       }
@@ -96,7 +102,9 @@ class TrackerController extends GetxController {
     try {
       await trackerService.addTracker(model.value!);
       model.value = null;
+
       getListTracker();
+   
     } catch (e) {
       Get.snackbar(
         'Error',

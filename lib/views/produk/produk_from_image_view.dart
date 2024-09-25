@@ -185,7 +185,7 @@ class ProdukFromImageView extends StatelessWidget {
                                                               .label!
                                                               .toLowerCase()))
                                                       .toList();
-                                  
+
                                               Get.toNamed(
                                                   AppRoutes.detailProduk,
                                                   arguments: {
