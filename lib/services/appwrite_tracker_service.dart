@@ -17,15 +17,14 @@ class AppwriteTrackerService {
   Future<List<TrackerModel>> getListTracker(String date, String userId) async {
     try {
       final response = await databases.listDocuments(
-        databaseId: AppwriteConstants.databaseId,
-        collectionId: AppwriteConstants.riwayatCollectionId,
-        queries: [
-          Query.equal('userId', [ userId ]),
-          Query.equal('tanggal', [date]),
-          Query.orderDesc('jam'),
-        ]
-      );
-    
+          databaseId: AppwriteConstants.databaseId,
+          collectionId: AppwriteConstants.riwayatCollectionId,
+          queries: [
+            Query.equal('userId', [userId]),
+            Query.equal('tanggal', [date]),
+            Query.orderDesc('jam'),
+          ]);
+
       return response.documents
           .map((e) => TrackerModel.fromMap(e.data))
           .toList();
@@ -46,6 +45,7 @@ class AppwriteTrackerService {
           'keterangan': tracker.keterangan,
           'jam': tracker.jam,
           'tanggal': tracker.tanggal,
+          'gula': tracker.gula,
           'kalori': tracker.kalori
         },
       );
@@ -55,13 +55,12 @@ class AppwriteTrackerService {
     }
   }
 
-
   Future<void> deleteTracker(id) async {
     try {
       await databases.deleteDocument(
         databaseId: AppwriteConstants.databaseId,
         collectionId: AppwriteConstants.riwayatCollectionId,
-        documentId:id,
+        documentId: id,
       );
     } on AppwriteException catch (e) {
       Logger().d(e.message);
@@ -80,6 +79,7 @@ class AppwriteTrackerService {
           'keterangan': tracker.keterangan,
           'jam': tracker.jam,
           'tanggal': tracker.tanggal,
+          'gula': tracker.gula,
           'kalori': tracker.kalori
         },
       );

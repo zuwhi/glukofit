@@ -40,7 +40,7 @@ class ScannerView extends StatelessWidget {
             return SafeArea(
               child: Stack(
                 children: [
-                  Text(produkController.listProduk[1].nama_produk),
+                  // Text(produkController.listProduk[1].nama_produk),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -169,7 +169,7 @@ class ScannerView extends StatelessWidget {
                   ),
                   scanController.resultScan.value.confidence != 0 &&
                           scanController.resultScan.value.confidence! * 100 >=
-                              50
+                              80
                       ? Positioned(
                           bottom: 140,
                           left: 0,
@@ -205,7 +205,6 @@ class CardProduk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Logger().d("produkController.listProduk ${produkController.listProduk}");
     if (namaProduk != "") {
       List<ProdukModel> produkList = produkController.listProduk
           .where((produk) => produk.nama_produk

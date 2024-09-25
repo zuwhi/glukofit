@@ -33,8 +33,8 @@ class NutrisiProdukView extends StatelessWidget {
     //   energyKcal: "0",
     //   energyKj: "0",
     // );
-
     final ProdukController controller = Get.put(ProdukController());
+
     controller.getNutritionProductFromFatsecretScrap(product.link!);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -49,7 +49,17 @@ class NutrisiProdukView extends StatelessWidget {
                   keterangan: "konsumsi ${product.productName}",
                   kalori: int.parse(controller
                       .fatsecretNutrisiScrap.value!.energyKcal!
-                      .replaceAll(" kkal", "")));
+                      .replaceAll(" kkal", "")),
+                  gula: controller.fatsecretNutrisiScrap.value!.sugars != null
+                      ? controller
+                              .fatsecretNutrisiScrap.value!.sugars!.isNotEmpty
+                          ? double.parse(controller
+                              .fatsecretNutrisiScrap.value!.sugars!
+                              .replaceAll("g", "")
+                              .replaceAll(",", "."))
+                          : 0.0
+                      : 0.0);
+
               Get.bottomSheet(BottomSheetAddNutritionWidget(
                 trackFromEdit: tracker,
                 isFromSearch: true,

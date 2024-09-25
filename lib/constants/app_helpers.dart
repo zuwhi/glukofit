@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:glukofit/constants/app_colors.dart';
+
 class AppHelpers {
   static String mapIndexToQuestion(int index) {
     switch (index) {
@@ -36,5 +39,16 @@ class AppHelpers {
       default:
         return 'Pertanyaan tidak tersedia';
     }
+  }
+
+  static Color gramCategory(double value) {
+    if (value > 0 && value <= 25) {
+      return AppColors.primary;
+    } else if (value > 25 && value <= 50) {
+      return Colors.orange;
+    } else if (value > 50) {
+      return Colors.red[700] ?? Colors.red;
+    }
+    return AppColors.primary;
   }
 }

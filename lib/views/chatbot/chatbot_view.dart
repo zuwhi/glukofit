@@ -60,7 +60,7 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
   Widget _buildUI() {
     return DashChat(
       messageOptions: const MessageOptions(
-        currentUserContainerColor: Color.fromARGB(255, 48, 94, 214),
+        currentUserContainerColor: AppColors.primary,
         currentUserTextColor: Colors.white,
       ),
       inputOptions: InputOptions(trailing: [
@@ -82,7 +82,9 @@ class _ChatBotGeminiPageState extends State<ChatBotGeminiPage> {
       messages = [chatMessage, ...messages];
     });
     try {
-      String question = chatMessage.text;
+      String prompt =
+          "Kamu adalah Glukobot, sebuah AI yang dirancang untuk memberikan informasi tentang diabetes. jadi jika pertanyaan pengguna tidak sesuai dengan kesehatan, tolong jangan dijawab, berikut pertanyaan dari pengguna :";
+      String question = "$prompt ${chatMessage.text}";
       List<Uint8List>? images;
       if (chatMessage.medias?.isNotEmpty ?? false) {
         images = [

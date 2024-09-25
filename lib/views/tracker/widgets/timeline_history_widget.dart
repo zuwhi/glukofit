@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
+import 'package:glukofit/constants/app_helpers.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
 import 'package:glukofit/controllers/tracker_controller.dart';
 import 'package:glukofit/models/tracker_model.dart';
@@ -32,10 +33,139 @@ class TimelinePage extends StatelessWidget {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TextPrimary(
-                  text: "Total kalori : ${controller.totalKalori.value} kkal",
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                InkWell(
+                  onTap: () {
+                    Get.dialog(
+                      AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: TextPrimary(
+                          text: "Kategori Gula",
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
+                        ),
+                        content: Column(
+                          children: [
+                            TextPrimary(
+                              text:
+                                  "Warna pada total gula menunujukkan kategori gula anda dengan ketentuan seperti berikut :",
+                              fontSize: 15.0,
+                              color: Colors.grey[600],
+                            ),
+                            const SizedBox(
+                              height: 30.0,
+                            ),
+                            Row(
+                              children: [
+                                TextPrimary(
+                                  text: "Rendah: 0 - 25 gram",
+                                  fontSize: 15.0,
+                                  // color: Colors.grey[600],
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: AppColors.primary,
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            TextPrimary(
+                                fontSize: 15.0,
+                                color: Colors.grey[600],
+                                text:
+                                    "Konsumsi di bawah 25 gram per hari dianggap rendah dan berada dalam batasan yang direkomendasikan oleh WHO untuk manfaat kesehatan tambahan."),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Row(
+                              children: [
+                                TextPrimary(
+                                  text: "Sedang: 26 - 50 gram",
+                                  fontSize: 15.0,
+                                  // color: Colors.grey[600],
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: Colors.orange,
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            TextPrimary(
+                                fontSize: 15.0,
+                                color: Colors.grey[600],
+                                text:
+                                    "Konsumsi di bawah 25 gram per hari dianggap rendah dan berada dalam batasan yang direkomendasikan oleh WHO untuk manfaat kesehatan tambahan."),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Row(
+                              children: [
+                                TextPrimary(
+                                  text: "Tinggi: Lebih dari 50 gram",
+                                  fontSize: 15.0,
+                                  // color: Colors.grey[600],
+                                ),
+                                const SizedBox(
+                                  width: 5.0,
+                                ),
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: Colors.red[700],
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            TextPrimary(
+                                fontSize: 15.0,
+                                color: Colors.grey[600],
+                                text:
+                                    "Konsumsi di atas 50 gram per hari dianggap tinggi dan melebihi batas yang disarankan, yang dapat meningkatkan risiko berbagai masalah kesehatan"),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextPrimary(
+                        text:
+                            "Total gula : ${controller.totalGulaToday.value.toStringAsFixed(2)} g",
+                        fontWeight: FontWeight.bold,
+                        color: AppHelpers.gramCategory(
+                          controller.totalGulaToday.value,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 3.0,
+                      ),
+                      Icon(Icons.info_outline_rounded,
+                          color: AppHelpers.gramCategory(
+                            controller.totalGulaToday.value,
+                          ),
+                          size: 18.0),
+                    ],
+                  ),
                 ),
                 ListView.builder(
                   itemCount: controller.listTracker.value.length,
@@ -105,11 +235,17 @@ class TimelinePage extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Jumlah Kalori : ${tracker.kalori.toString()} kal",
+                                    "Kalori : ${tracker.kalori.toString()} kal,",
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  const SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Text(
+                                    "Gula : ${tracker.gula == null ? 0 : tracker.gula.toString()} g",
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                 ],

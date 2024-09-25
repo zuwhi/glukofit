@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/controllers/auth_controller.dart';
@@ -336,7 +337,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ),
                       ),
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 ),
@@ -350,19 +351,26 @@ class _ProfileViewState extends State<ProfileView> {
         }
       }),
       extendBody: true,
-      floatingActionButton: Visibility(
-        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+      floatingActionButton: SizedBox(
+        height: 68,
+        width: 68,
         child: FloatingActionButton(
           backgroundColor: AppColors.primary,
           onPressed: () {
             Get.toNamed(AppRoutes.scanner);
           },
           shape: const CircleBorder(),
-          child: const Icon(
-            Icons.circle,
-            size: 50,
-            color: Colors.white,
-          ),
+          child: Container(
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+              ),
+              child: SvgPicture.asset(
+                'assets/svg/scan.svg',
+                height: 35,
+                width: 35,
+              )),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
