@@ -167,14 +167,13 @@ class ArtikelListView extends GetView<ArtikelController> {
                       artikel: artikel,
                       onTap: () => navigateToDetailPage(artikel),
                       isLarge: index % 3 == 0,
-                      onEdit: (authController.userData.value['userLevel'] !=
-                              "admin")
+                      onEdit: (authController.userData.value['role'] == "admin")
                           ? () => navigateToEditPage(artikel)
                           : null,
-                      onDelete: (authController.userData.value['userLevel'] !=
-                              "admin")
-                          ? () => showDeleteConfirmation(context, artikel)
-                          : null,
+                      onDelete:
+                          (authController.userData.value['role'] == "admin")
+                              ? () => showDeleteConfirmation(context, artikel)
+                              : null,
                     );
                   },
                   childCount: controller.filteredArtikels.length,
@@ -188,24 +187,22 @@ class ArtikelListView extends GetView<ArtikelController> {
         ],
       ),
       extendBody: true,
-      floatingActionButton:
-          (authController.userData.value['userLevel'] != "admin")
-              ? FloatingActionButton(
-                  backgroundColor: AppColors.orange,
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.artikel_add);
-                  },
-                  shape: const CircleBorder(),
-                  child: const Icon(
-                    Icons.add,
-                    size: 30,
-                    color: Colors.white,
-                  ),
-                )
-              : Container(),
+      floatingActionButton: (authController.userData.value['role'] == "admin")
+          ? FloatingActionButton(
+              backgroundColor: AppColors.orange,
+              onPressed: () {
+                Get.toNamed(AppRoutes.artikel_add);
+              },
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.add,
+                size: 30,
+                color: Colors.white,
+              ),
+            )
+          : Container(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
-      // bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 
