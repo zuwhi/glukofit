@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:glukofit/constants/appwrite.dart';
 import 'package:glukofit/models/bmr_model.dart';
 import 'package:glukofit/services/appwrite_client_helper.dart';
-import 'package:logger/logger.dart';
+
 
 class AppwriteBmrService {
   late Client _appwriteClient;
@@ -22,7 +22,7 @@ class AppwriteBmrService {
         data: {'userId': bmr.userId, 'total': bmr.total},
       );
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }
@@ -36,7 +36,7 @@ class AppwriteBmrService {
         data: {'total': bmr.total},
       );
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }
@@ -49,14 +49,14 @@ class AppwriteBmrService {
           queries: [
             Query.equal('userId', [userId]),
           ]);
-      Logger().d(response.documents[0].data.toString());
+
 
       return BMRModel.fromMap(response.documents[0].data);
     } on AppwriteException catch (e) {
-      Logger().d("cek error : ${e.message}");
+
       return null;
     } catch (e) {
-      Logger().d("cek error : $e");
+   
       return null;
     }
   }

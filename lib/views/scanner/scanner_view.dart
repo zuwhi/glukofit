@@ -11,7 +11,6 @@ import 'package:glukofit/controllers/produk_controller.dart';
 import 'package:glukofit/controllers/scanner_controller.dart';
 import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
-import 'package:logger/logger.dart';
 
 class ScannerView extends StatelessWidget {
   const ScannerView({super.key});
@@ -103,75 +102,76 @@ class ScannerView extends StatelessWidget {
                           ],
                         ),
                       )),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Column(
-                      children: [
-                        Container(
-                          color: Colors.black38,
-                          width: double.infinity,
-                          height: 105,
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // SizedBox(
-                              //   width: 35,
-                              //   child: IconButton(
-                              //       onPressed: () {},
-                              //       icon: const Icon(
-                              //         Icons.photo,
-                              //         size: 35,
-                              //         color: Colors.white,
-                              //       )),
-                              // ),
-                              InkWell(
-                                onTap: () {
-                                  scanController.captureImage();
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.all(20),
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      border: Border.all(
-                                          width: 2, color: Colors.white)),
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white, // border color
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2),
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.transparent,
-                                        ),
-                                        child: Container(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // const SizedBox(
-                              //   width: 35,
-                              // )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 0,
+                  //   left: 0,
+                  //   right: 0,
+                  //   child: Column(
+                  //     children: [
+                  //       Container(
+                  //         color: Colors.black38,
+                  //         width: double.infinity,
+                  //         height: 105,
+                  //         padding: const EdgeInsets.symmetric(horizontal: 15),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: [
+                  //             // SizedBox(
+                  //             //   width: 35,
+                  //             //   child: IconButton(
+                  //             //       onPressed: () {},
+                  //             //       icon: const Icon(
+                  //             //         Icons.photo,
+                  //             //         size: 35,
+                  //             //         color: Colors.white,
+                  //             //       )),
+                  //             // ),
+                  //             InkWell(
+                  //               onTap: () {
+                  //                 scanController.captureImage();
+                  //               },
+                  //               child: Container(
+                  //                 margin: const EdgeInsets.all(20),
+                  //                 padding: const EdgeInsets.all(5),
+                  //                 decoration: BoxDecoration(
+                  //                     borderRadius: BorderRadius.circular(100),
+                  //                     border: Border.all(
+                  //                         width: 2, color: Colors.white)),
+                  //                 child: Container(
+                  //                   width: 50,
+                  //                   height: 50,
+                  //                   decoration: const BoxDecoration(
+                  //                     color: Colors.white, // border color
+                  //                     shape: BoxShape.circle,
+                  //                   ),
+                  //                   child: Padding(
+                  //                     padding: const EdgeInsets.all(2),
+                  //                     child: Container(
+                  //                       decoration: const BoxDecoration(
+                  //                         shape: BoxShape.circle,
+                  //                         color: Colors.transparent,
+                  //                       ),
+                  //                       child: Container(),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             // const SizedBox(
+                  //             //   width: 35,
+                  //             // )
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   scanController.resultScan.value.confidence != 0 &&
                           scanController.resultScan.value.confidence! * 100 >=
                               80
                       ? Positioned(
-                          bottom: 140,
+                          bottom: 110,
                           left: 0,
                           right: 0,
                           child: CardProduk(
@@ -213,7 +213,6 @@ class CardProduk extends StatelessWidget {
           .toList();
 
       if (produkList.isNotEmpty) {
-        Logger().d(produkList[0]);
         ProdukModel produk = produkList[0];
         return Center(
           child: InkWell(
