@@ -79,23 +79,25 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                   ),
                   isEdit
                       ? Container()
-                      : InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.searchNutrisi);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.search,
-                                  color: Colors.blue[900], size: 16),
-                              TextPrimary(
-                                text: "Pencarian",
-                                fontSize: 14.0,
-                                color: Colors.blue[900],
+                      : isFromSearch
+                          ? Container()
+                          : InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.searchNutrisi);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.search,
+                                      color: Colors.blue[900], size: 16),
+                                  TextPrimary(
+                                    text: "Pencarian",
+                                    fontSize: 14.0,
+                                    color: Colors.blue[900],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
                 ],
               ),
               Padding(
@@ -284,6 +286,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                         controller.getListTracker();
 
                         if (isFromSearch) {
+                          controller.getListTracker();
                           Get.offAllNamed(AppRoutes.tracker);
                         } else {
                           Get.back();
