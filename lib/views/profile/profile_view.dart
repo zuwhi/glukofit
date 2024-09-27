@@ -351,26 +351,29 @@ class _ProfileViewState extends State<ProfileView> {
         }
       }),
       extendBody: true,
-      floatingActionButton: SizedBox(
-        height: 68,
-        width: 68,
-        child: FloatingActionButton(
-          backgroundColor: AppColors.primary,
-          onPressed: () {
-            Get.toNamed(AppRoutes.scanner);
-          },
-          shape: const CircleBorder(),
-          child: Container(
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.white,
-              ),
-              child: SvgPicture.asset(
-                'assets/svg/scan.svg',
-                height: 35,
-                width: 35,
-              )),
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+        child: SizedBox(
+          height: 68,
+          width: 68,
+          child: FloatingActionButton(
+            backgroundColor: AppColors.primary,
+            onPressed: () {
+              Get.toNamed(AppRoutes.scanner);
+            },
+            shape: const CircleBorder(),
+            child: Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                ),
+                child: SvgPicture.asset(
+                  'assets/svg/scan.svg',
+                  height: 35,
+                  width: 35,
+                )),
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
