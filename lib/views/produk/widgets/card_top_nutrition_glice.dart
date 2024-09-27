@@ -5,7 +5,6 @@ import 'package:glukofit/controllers/produk_controller.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:glukofit/views/produk/nutrisi_produk_view.dart';
 import 'package:glukofit/views/produk/widgets/card_point_nutrition.dart';
-import 'package:logger/logger.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class CardTopNutritionGlaceWidget extends StatelessWidget {

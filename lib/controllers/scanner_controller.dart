@@ -3,7 +3,7 @@ import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/models/scan_model.dart';
-import 'package:logger/logger.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 class ScanController extends GetxController {
@@ -113,7 +113,7 @@ class ScanController extends GetxController {
         resultScan(scanModel);
 
         presentage = detectedObject['confidence'];
-        Logger().d(presentage);
+ 
         update();
       } else {
         print('No objects detected or detector result is null.');
@@ -143,7 +143,7 @@ class ScanController extends GetxController {
       stopCamera();
       loadModelFromPath(fileImage.value!.path);
     } catch (e) {
-      Logger().e('Error capturing image: $e');
+
       if (!isSnackbarShown.value) {
         Get.snackbar(
           "Terjadi Kesalahan",
@@ -173,13 +173,12 @@ class ScanController extends GetxController {
           index: detectedObject['index'],
           label: detectedObject['label'],
         );
-        Logger().d("cek model");
-        Logger().d(scanModel.toJson());
+
         resultScan(scanModel);
 
         update();
       } else {
-        Logger().i('No objects detected.');
+      
       }
     } catch (e) {
       if (!isSnackbarShown.value) {

@@ -5,7 +5,6 @@ import 'package:glukofit/constants/app_colors.dart';
 import 'package:glukofit/models/diagnosa_model.dart';
 import 'package:glukofit/services/diagnosa_service.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
-import 'package:logger/logger.dart';
 
 class DiagnosaView extends StatefulWidget {
   const DiagnosaView({super.key});
@@ -215,7 +214,7 @@ class _DiagnosaViewState extends State<DiagnosaView> {
                   return const SizedBox.shrink();
 
                 final value = _diagnosaModel.toJson()[key]?.first ?? 'No';
-                Logger().d('cek quest =  $question');
+
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Column(

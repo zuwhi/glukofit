@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:glukofit/constants/app_constant.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/models/diagnosa_model.dart';
-import 'package:logger/logger.dart';
+
 
 class DiagnosaController extends GetxController {
   RxInt currentIndex = 1.obs;
@@ -20,10 +20,10 @@ class DiagnosaController extends GetxController {
       isLoading.value = true;
       Dio dio = Dio();
       String url = AppConstant.urlDiagnose;
-      Logger().d(diagnosaModel.value.toJson());
+
       final res =
           await dio.post('$url/predict', data: diagnosaModel.value.toJson());
-      Logger().d(res.data["predictions"][0]);
+
       final response = res.data["predictions"][0];
       if (response != null) {
         Get.toNamed(AppRoutes.resultDiagnosa,

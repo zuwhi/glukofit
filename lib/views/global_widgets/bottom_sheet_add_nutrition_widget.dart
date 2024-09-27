@@ -9,7 +9,7 @@ import 'package:glukofit/views/diagnosa/widgets/custom_form_diagnose_widget.dart
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
+
 
 class BottomSheetAddNutritionWidget extends StatelessWidget {
   const BottomSheetAddNutritionWidget(
@@ -255,7 +255,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                     .format(controller.selectedDate.value),
                               );
 
-                              Logger().d(model.toJson());
+
                               controller.updateTracker(model);
                               controller.getListTracker();
                               Get.back();

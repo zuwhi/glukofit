@@ -8,7 +8,7 @@ import 'package:glukofit/models/nutrisi_model.dart';
 import 'package:glukofit/models/product_scrap_model.dart';
 import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/services/appwrite_produk_service.dart';
-import 'package:logger/logger.dart';
+
 
 enum ProdukScrapState { nutrisiScrap, listProductScrap, emptyScrap }
 
@@ -54,7 +54,7 @@ class ProdukController extends GetxController {
 
       // listProductScrap.value = productScrap;
     } catch (e) {
-      Logger().d(e);
+
       Get.snackbar('Error', 'Failed to get produk: $e');
     } finally {
       isLoading.value = false;
@@ -77,12 +77,12 @@ class ProdukController extends GetxController {
 
   Future<void> getDetailProductFromScrap(String url) async {
     try {
-      Logger().d("cek url: $url");
+  
       isLoadingOnNutritionView.value = true;
       final response =
           await dio.get("https://scrap-gizi.vercel.app/scrape/detail?url=$url");
       final data = response.data;
-      Logger().d(data);
+
       detailNutrisiScrap.value = nutrisiScrapModelFromJson(jsonEncode(data));
     } catch (e) {
       Get.snackbar('Error', 'Failed to get list produk: $e');
@@ -93,7 +93,7 @@ class ProdukController extends GetxController {
 
   Future<void> getListProductFromFatsecretScrap(String product) async {
     try {
-      Logger().d("proses");
+ 
       isLoading.value = true;
       final response = await dio
           .get("https://scrap-gizi.vercel.app/scrape/fatsecret/?q=$product");
@@ -109,7 +109,7 @@ class ProdukController extends GetxController {
   }
   Future<void> getListPencarianNutrisi(String product) async {
     try {
-      Logger().d("proses");
+
       isLoading.value = true;
       final response = await dio
           .get("https://scrap-gizi.vercel.app/scrape/fatsecret/?q=$product");
