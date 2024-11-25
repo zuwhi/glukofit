@@ -1,4 +1,4 @@
 class AppConstant {
-  static String urlDiagnose = "http://51.20.8.200";
+  static String urlDiagnose = "https://glukofit-flask-production.up.railway.app";
   static String urlGetProdukFromScrape = "https://scrap-gizi.vercel.app";
 }
