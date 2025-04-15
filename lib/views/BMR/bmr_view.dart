@@ -11,7 +11,7 @@ import 'package:glukofit/views/diagnosa/widgets/custom_choice_chip_widget.dart';
 import 'package:glukofit/views/diagnosa/widgets/custom_form_diagnose_widget.dart';
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
-import 'package:logger/logger.dart';
+
 
 class BmrView extends StatelessWidget {
   const BmrView({super.key});
@@ -24,7 +24,7 @@ class BmrView extends StatelessWidget {
     final AuthController authController = Get.find();
     final BmrController controller = Get.put(BmrController());
     if (authController.userData.value['berat'] != null) {
-      Logger().d(authController.userData.value['berat']);
+
       controller.weight.value =
           authController.userData.value['berat'].toString();
     }

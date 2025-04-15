@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:glukofit/constants/appwrite.dart';
 import 'package:glukofit/models/tracker_model.dart';
 import 'package:glukofit/services/appwrite_client_helper.dart';
-import 'package:logger/logger.dart';
+
 
 class AppwriteTrackerService {
   late Client _appwriteClient;
@@ -29,7 +29,7 @@ class AppwriteTrackerService {
           .map((e) => TrackerModel.fromMap(e.data))
           .toList();
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }
@@ -50,7 +50,7 @@ class AppwriteTrackerService {
         },
       );
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }
@@ -63,7 +63,7 @@ class AppwriteTrackerService {
         documentId: id,
       );
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }
@@ -84,7 +84,7 @@ class AppwriteTrackerService {
         },
       );
     } on AppwriteException catch (e) {
-      Logger().d(e.message);
+
       throw Exception(e.message);
     }
   }

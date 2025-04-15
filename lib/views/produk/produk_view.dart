@@ -12,7 +12,7 @@ import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:glukofit/views/produk/widgets/card_list_product.dart';
 import 'package:glukofit/views/produk/widgets/card_top_nutrition_glice.dart';
-import 'package:logger/logger.dart';
+
 
 class ProdukView extends StatelessWidget {
   const ProdukView({super.key});
@@ -202,10 +202,7 @@ class ProdukView extends StatelessWidget {
                                     return CardListProductWidget(
                                       product: product,
                                       onTap: () {
-                                        Logger().d(product.toJson());
-                                        // controller
-                                        //     .getNutritionProductFromFatsecretScrap(
-                                        //         product.link!);
+             
                                         Get.toNamed(AppRoutes.nutrisiProduk,
                                             arguments: {"product": product});
                                       },

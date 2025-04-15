@@ -2,7 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:glukofit/constants/appwrite.dart';
 import 'package:glukofit/models/produk_model.dart';
 import 'package:glukofit/services/appwrite_client_helper.dart';
-import 'package:logger/logger.dart';
+
 
 class AppwriteProdukService {
   late Client _appwriteClient;
@@ -18,8 +18,7 @@ class AppwriteProdukService {
         databaseId: AppwriteConstants.databaseId,
         collectionId: AppwriteConstants.produkCollectionId,
       );
-      Logger().d(response);
-      Logger().d(response.documents[0]);
+
       return response.documents
           .map((e) => ProdukModel.fromMap(e.data))
           .toList();
@@ -36,9 +35,7 @@ class AppwriteProdukService {
           queries: [
             Query.equal('nama_produk', [produk]),
           ]);
-      Logger().d(response);
-      Logger().d(response.documents);
-      Logger().d(response.documents[0]);
+
     } catch (e) {
       rethrow;
     }

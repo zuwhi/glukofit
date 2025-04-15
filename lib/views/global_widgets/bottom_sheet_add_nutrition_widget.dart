@@ -9,7 +9,7 @@ import 'package:glukofit/views/diagnosa/widgets/custom_form_diagnose_widget.dart
 import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
+
 
 class BottomSheetAddNutritionWidget extends StatelessWidget {
   const BottomSheetAddNutritionWidget(
@@ -79,23 +79,25 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                   ),
                   isEdit
                       ? Container()
-                      : InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.searchNutrisi);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.search,
-                                  color: Colors.blue[900], size: 16),
-                              TextPrimary(
-                                text: "Pencarian",
-                                fontSize: 14.0,
-                                color: Colors.blue[900],
+                      : isFromSearch
+                          ? Container()
+                          : InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.searchNutrisi);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.search,
+                                      color: Colors.blue[900], size: 16),
+                                  TextPrimary(
+                                    text: "Pencarian",
+                                    fontSize: 14.0,
+                                    color: Colors.blue[900],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
                 ],
               ),
               Padding(
@@ -253,7 +255,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                     .format(controller.selectedDate.value),
                               );
 
-                              Logger().d(model.toJson());
+
                               controller.updateTracker(model);
                               controller.getListTracker();
                               Get.back();
@@ -284,6 +286,7 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                         controller.getListTracker();
 
                         if (isFromSearch) {
+                          controller.getListTracker();
                           Get.offAllNamed(AppRoutes.tracker);
                         } else {
                           Get.back();

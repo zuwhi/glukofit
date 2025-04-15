@@ -6,7 +6,7 @@ import 'package:glukofit/models/tracker_model.dart';
 import 'package:glukofit/services/appwrite_bmr.dart';
 import 'package:glukofit/services/appwrite_tracker_service.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
+
 
 class TrackerController extends GetxController {
   RxInt tabIndex = 0.obs;
@@ -41,7 +41,7 @@ class TrackerController extends GetxController {
 
       restKalori.value = bmrTotal.value - totalKaloriToday.value;
     } catch (e) {
-      Logger().d(e);
+
       // Get.snackbar(
       //   'Error',
       //   "terjadi kesalahan $e",
@@ -85,13 +85,12 @@ class TrackerController extends GetxController {
       totalKaloriToday.value = 0;
       totalGulaToday.value = 0;
       for (TrackerModel tracker in listTracker.value) {
-        print('ceeeeek');
-        Logger().d(tracker.kalori);
+
         totalGulaToday.value += tracker.gula ?? 0;
         totalKalori.value += tracker.kalori ?? 0;
         restKalori.value = bmrTotal.value - totalKalori.value;
       }
-      Logger().d(totalKalori);
+
     } finally {
       isLoading.value = false;
     }

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:glukofit/constants/app_routes.dart';
 import 'package:glukofit/models/bmr_model.dart';
 import 'package:glukofit/services/appwrite_bmr.dart';
-import 'package:logger/logger.dart';
+
 
 enum Gender { empty, male, female }
 
@@ -33,7 +33,6 @@ class BmrController extends GetxController {
     }
 
     kaloriTotal.value = bmr.value * tdee.value;
-    Logger().d(kaloriTotal);
   }
 
   void simpan(BMRModel model) async {
