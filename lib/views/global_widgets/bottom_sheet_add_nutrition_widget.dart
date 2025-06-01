@@ -10,7 +10,6 @@ import 'package:glukofit/views/global_widgets/button_primary.dart';
 import 'package:glukofit/views/global_widgets/text_primary.dart';
 import 'package:intl/intl.dart';
 
-
 class BottomSheetAddNutritionWidget extends StatelessWidget {
   const BottomSheetAddNutritionWidget(
       {super.key,
@@ -37,9 +36,10 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
     final TrackerController controller = Get.put(TrackerController());
     if (isEdit && trackFromEdit != null) {
       controller.selectedDate.value = DateTime.parse(trackFromEdit!.tanggal!);
+      final parsedTime = DateFormat("hh:mm a").parse(trackFromEdit!.jam!);
       controller.selectedTime.value = TimeOfDay(
-        hour: int.parse(trackFromEdit!.jam!.split(":")[0]),
-        minute: int.parse(trackFromEdit!.jam!.split(":")[1]),
+        hour: parsedTime.hour,
+        minute: parsedTime.minute,
       );
     }
     final AuthController authController = Get.find();
@@ -255,7 +255,6 @@ class BottomSheetAddNutritionWidget extends StatelessWidget {
                                     .format(controller.selectedDate.value),
                               );
 
-
                               controller.updateTracker(model);
                               controller.getListTracker();
                               Get.back();
@@ -346,7 +345,7 @@ class DateTimeInput extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                           const SizedBox(
-                            width: 15.0,
+                            width: 12.0,
                           ),
                           TextPrimary(
                             text: "${controller.selectedDate.value.toLocal()}"
